@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Models – Corcoran Lifestyle Properties</title>
+  <meta name="description" content="Browse our inventory of tiny homes, park model RVs, and single-section mobile homes. New and used options with seller financing available." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .filter-bar { background: var(--white); padding: 24px 0; border-bottom: 1px solid var(--sand); position: sticky; top: 72px; z-index: 10; box-shadow: var(--shadow-sm); }
+    .filter-inner { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; }
+    .filter-btn { background: var(--warm-bg); border: 2px solid transparent; color: var(--text); padding: 9px 20px; border-radius: 50px; font-size: 0.87rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
+    .filter-btn:hover, .filter-btn.active { background: var(--rust); color: var(--white); border-color: var(--rust); }
+    .models-section { background: var(--warm-bg); }
+    .model-detail-card { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); margin-bottom: 40px; }
+    .mdc-img { min-height: 360px; position: relative; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+    .mdc-img::after { content: '🏡'; position: absolute; bottom: -20px; right: 20px; font-size: 120px; opacity: 0.15; }
+    .mdc-body { padding: 48px 40px; display: flex; flex-direction: column; justify-content: center; }
+    .mdc-tag { display: inline-block; background: var(--warm-bg); color: var(--rust); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-radius: 50px; margin-bottom: 16px; }
+    .mdc-name { font-family: var(--font-display); font-size: 2rem; color: var(--charcoal); margin-bottom: 12px; }
+    .mdc-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.75; margin-bottom: 24px; }
+    .mdc-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+    .mdc-spec { background: var(--warm-bg); padding: 12px 16px; border-radius: 10px; }
+    .mdc-spec-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .mdc-spec-val { font-size: 1rem; font-weight: 600; color: var(--charcoal); margin-top: 2px; }
+    .mdc-pricing { background: var(--forest); color: var(--white); border-radius: var(--radius); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+    .mdc-price-main { font-family: var(--font-display); font-size: 1.8rem; }
+    .mdc-price-sub { font-size: 0.82rem; opacity: 0.7; margin-top: 4px; }
+    .mdc-monthly { text-align: right; }
+    .mdc-monthly-val { font-family: var(--font-display); font-size: 1.4rem; color: var(--gold); }
+    .mdc-monthly-label { font-size: 0.78rem; opacity: 0.7; }
+    .mdc-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+```
+@media (max-width: 900px) {
+  .model-detail-card { grid-template-columns: 1fr; }
+  .mdc-img { min-height: 260px; }
+  .mdc-body { padding: 32px 24px; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<header class="nav-header scrolled" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🏡</span>
+      <div class="logo-text">
+        <span class="logo-main">Corcoran</span>
+        <span class="logo-sub">Lifestyle Properties</span>
+      </div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="models.html" class="active">Models</a>
+      <a href="financing.html">Financing</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="https://wa.me/12515010068" target="_blank" class="btn btn-wa nav-wa">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp Us
+    </a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+
+<div class="page-hero">
+  <div class="container">
+    <div class="hero-badge" style="display:inline-block;margin-bottom:16px;">✦ New & Used Available</div>
+    <h1>Browse Our Homes</h1>
+    <p>Tiny homes, park model RVs, and single-section mobile homes — all with flexible seller financing.</p>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-inner">
+      <button class="filter-btn active" data-filter="all">All Homes</button>
+      <button class="filter-btn" data-filter="park-model">Park Model RVs</button>
+      <button class="filter-btn" data-filter="tiny-home">Tiny Homes</button>
+      <button class="filter-btn" data-filter="mobile-home">Mobile Homes</button>
+      <button class="filter-btn" data-filter="used">Used / Value</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODELS LIST -->
+
+<section class="models-section section">
+  <div class="container">
+
+```
+<!-- Hacienda -->
+<div class="model-detail-card" id="hacienda" data-category="park-model" data-aos>
+  <div class="mdc-img hacienda">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div class="model-badge" style="background:rgba(255,255,255,0.9);">🔥 Best Seller</div>
+      <div class="model-tag">Park Model RV</div>
+    </div>
+  </div>
+  <div class="mdc-body">
+    <div class="mdc-tag">Park Model RV</div>
+    <div class="mdc-name">The Hacienda</div>
+    <p class="mdc-desc">Our most popular model — the Hacienda blends rustic charm with modern living. Perfect for first-time buyers, vacation homes, or income-producing short-term rentals. Comes fully equipped with a full kitchen, cozy living area, and a comfortable bedroom loft or ground-level suite.</p>
+    <div class="mdc-specs-grid">
+      <div class="mdc-spec"><div class="mdc-spec-label">Square Footage</div><div class="mdc-spec-val">~400 sq ft</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bedrooms</div><div class="mdc-spec-val">1–2</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bathrooms</div><div class="mdc-spec-val">1 Full Bath</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Condition</div><div class="mdc-spec-val">New & Used</div></div>
+    </div>
+    <div class="mdc-pricing">
+      <div><div class="mdc-price-main">From $42,900</div><div class="mdc-price-sub">As low as $1,500 down</div></div>
+      <div class="mdc-monthly"><div class="mdc-monthly-val">$399/mo</div><div class="mdc-monthly-label">Est. monthly payment</div></div>
+    </div>
+    <div class="mdc-btns">
+      <a href="https://wa.me/12515010068?text=Hi!%20I%27m%20interested%20in%20The%20Hacienda.%20Can%20you%20tell%20me%20more?" target="_blank" class="btn btn-wa">Inquire on WhatsApp</a>
+      <a href="contact.html" class="btn btn-outline">Get a Quote</a>
+    </div>
+  </div>
+</div>
+
+<!-- Summit -->
+<div class="model-detail-card" id="summit" data-category="tiny-home" data-aos>
+  <div class="mdc-img summit">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div class="model-badge new" style="background:rgba(255,255,255,0.9);">✨ New Arrival</div>
+      <div class="model-tag">Tiny Home</div>
+    </div>
+  </div>
+  <div class="mdc-body">
+    <div class="mdc-tag">Tiny Home</div>
+    <div class="mdc-name">The Summit</div>
+    <p class="mdc-desc">The Summit is built for families who want space without compromise. With an open floor plan, two bedrooms, and premium finishes, this home feels much larger than its footprint. Ideal for full-time living or as a starter home on your own land.</p>
+    <div class="mdc-specs-grid">
+      <div class="mdc-spec"><div class="mdc-spec-label">Square Footage</div><div class="mdc-spec-val">~560 sq ft</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bedrooms</div><div class="mdc-spec-val">2</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bathrooms</div><div class="mdc-spec-val">1 Full Bath</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Condition</div><div class="mdc-spec-val">New</div></div>
+    </div>
+    <div class="mdc-pricing">
+      <div><div class="mdc-price-main">From $59,500</div><div class="mdc-price-sub">As low as $2,000 down</div></div>
+      <div class="mdc-monthly"><div class="mdc-monthly-val">$549/mo</div><div class="mdc-monthly-label">Est. monthly payment</div></div>
+    </div>
+    <div class="mdc-btns">
+      <a href="https://wa.me/12515010068?text=Hi!%20I%27m%20interested%20in%20The%20Summit.%20Can%20you%20tell%20me%20more?" target="_blank" class="btn btn-wa">Inquire on WhatsApp</a>
+      <a href="contact.html" class="btn btn-outline">Get a Quote</a>
+    </div>
+  </div>
+</div>
+
+<!-- Dream Dwelling -->
+<div class="model-detail-card" id="dream" data-category="tiny-home" data-aos>
+  <div class="mdc-img dream">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div class="model-tag">Tiny Home</div>
+    </div>
+  </div>
+  <div class="mdc-body">
+    <div class="mdc-tag">Tiny Home</div>
+    <div class="mdc-name">Dream Dwelling / Tannehill</div>
+    <p class="mdc-desc">A warm, beautifully crafted tiny home that feels like a retreat. The Dream Dwelling / Tannehill model features wood-accent interiors, efficient use of space, and everything you need for comfortable full-time living. A perennial customer favorite.</p>
+    <div class="mdc-specs-grid">
+      <div class="mdc-spec"><div class="mdc-spec-label">Square Footage</div><div class="mdc-spec-val">~480 sq ft</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bedrooms</div><div class="mdc-spec-val">1–2</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bathrooms</div><div class="mdc-spec-val">1 Full Bath</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Condition</div><div class="mdc-spec-val">New & Used</div></div>
+    </div>
+    <div class="mdc-pricing">
+      <div><div class="mdc-price-main">From $49,900</div><div class="mdc-price-sub">As low as $1,500 down</div></div>
+      <div class="mdc-monthly"><div class="mdc-monthly-val">$459/mo</div><div class="mdc-monthly-label">Est. monthly payment</div></div>
+    </div>
+    <div class="mdc-btns">
+      <a href="https://wa.me/12515010068?text=Hi!%20I%27m%20interested%20in%20the%20Dream%20Dwelling%20%2F%20Tannehill.%20Can%20you%20tell%20me%20more?" target="_blank" class="btn btn-wa">Inquire on WhatsApp</a>
+      <a href="contact.html" class="btn btn-outline">Get a Quote</a>
+    </div>
+  </div>
+</div>
+
+<!-- Sedona -->
+<div class="model-detail-card" id="sedona" data-category="mobile-home" data-aos>
+  <div class="mdc-img sedona">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div class="model-badge deal" style="background:rgba(255,255,255,0.9);">💎 Great Value</div>
+      <div class="model-tag">Mobile Home</div>
+    </div>
+  </div>
+  <div class="mdc-body">
+    <div class="mdc-tag">Single-Section Mobile Home</div>
+    <div class="mdc-name">Sedona</div>
+    <p class="mdc-desc">The Sedona offers real family space at an incredible price. With 2–3 bedrooms, 2 full baths, and a spacious open living area, it's ideal for growing families who want more room without paying more. One of our best value options in the mobile home category.</p>
+    <div class="mdc-specs-grid">
+      <div class="mdc-spec"><div class="mdc-spec-label">Square Footage</div><div class="mdc-spec-val">~720 sq ft</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bedrooms</div><div class="mdc-spec-val">2–3</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bathrooms</div><div class="mdc-spec-val">2 Full Baths</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Condition</div><div class="mdc-spec-val">New</div></div>
+    </div>
+    <div class="mdc-pricing">
+      <div><div class="mdc-price-main">From $74,900</div><div class="mdc-price-sub">As low as $3,000 down</div></div>
+      <div class="mdc-monthly"><div class="mdc-monthly-val">$699/mo</div><div class="mdc-monthly-label">Est. monthly payment</div></div>
+    </div>
+    <div class="mdc-btns">
+      <a href="https://wa.me/12515010068?text=Hi!%20I%27m%20interested%20in%20the%20Sedona.%20Can%20you%20tell%20me%20more?" target="_blank" class="btn btn-wa">Inquire on WhatsApp</a>
+      <a href="contact.html" class="btn btn-outline">Get a Quote</a>
+    </div>
+  </div>
+</div>
+
+<!-- Grand Haven 2 -->
+<div class="model-detail-card" id="haven" data-category="mobile-home" data-aos>
+  <div class="mdc-img haven">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div class="model-tag">Mobile Home</div>
+    </div>
+  </div>
+  <div class="mdc-body">
+    <div class="mdc-tag">Single-Section Mobile Home</div>
+    <div class="mdc-name">Grand Haven 2</div>
+    <p class="mdc-desc">Our flagship family home — the Grand Haven 2 delivers everything a family needs with 3 bedrooms, 2 full baths, a full-sized kitchen, and a living room that truly feels grand. Built for comfort, durability, and long-term affordable living.</p>
+    <div class="mdc-specs-grid">
+      <div class="mdc-spec"><div class="mdc-spec-label">Square Footage</div><div class="mdc-spec-val">~840 sq ft</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bedrooms</div><div class="mdc-spec-val">3</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Bathrooms</div><div class="mdc-spec-val">2 Full Baths</div></div>
+      <div class="mdc-spec"><div class="mdc-spec-label">Condition</div><div class="mdc-spec-val">New</div></div>
+    </div>
+    <div class="mdc-pricing">
+      <div><div class="mdc-price-main">From $89,900</div><div class="mdc-price-sub">As low as $4,000 down</div></div>
+      <div class="mdc-monthly"><div class="mdc-monthly-val">$849/mo</div><div class="mdc-monthly-label">Est. monthly payment</div></div>
+    </div>
+    <div class="mdc-btns">
+      <a href="https://wa.me/12515010068?text=Hi!%20I%27m%20interested%20in%20the%20Grand%20Haven%202.%20Can%20you%20tell%20me%20more?" target="_blank" class="btn btn-wa">Inquire on WhatsApp</a>
+      <a href="contact.html" class="btn btn-outline">Get a Quote</a>
+    </div>
+  </div>
+</div>
+
+<!-- Used Section -->
+<div style="background:var(--white);border-radius:var(--radius-lg);padding:48px;text-align:center;box-shadow:var(--shadow-sm);" data-category="used" data-aos>
+  <div class="section-tag">Budget-Friendly</div>
+  <h2 style="margin:16px 0;">Pre-Owned / Used Homes</h2>
+  <p style="color:var(--text-muted);max-width:560px;margin:0 auto 32px;font-size:1.05rem;line-height:1.75;">Our used inventory changes frequently. All pre-owned homes are inspected and reconditioned before sale. Prices start as low as <strong>$15,000</strong> with financing available. Message us to see current used inventory.</p>
+  <a href="https://wa.me/12515010068?text=Hi!%20I%27m%20looking%20for%20affordable%20used%20or%20pre-owned%20homes.%20What%20do%20you%20have%20available?" target="_blank" class="btn btn-wa btn-lg">See Used Inventory on WhatsApp</a>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- CTA Banner -->
+
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-banner-inner">
+      <h2>Not Sure Which Home Is Right for You?</h2>
+      <p>Tell us your budget, family size, and land situation — we'll match you with the perfect home. It's fast, friendly, and free.</p>
+      <div class="cta-banner-btns">
+        <a href="https://wa.me/12515010068?text=Hi!%20I%20need%20help%20choosing%20the%20right%20home." target="_blank" class="btn btn-wa btn-lg">Get Personalized Help</a>
+        <a href="financing.html" class="btn btn-light btn-lg">View Financing Options</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-icon">🏡</span><div class="logo-text"><span class="logo-main">Corcoran</span><span class="logo-sub">Lifestyle Properties</span></div></a>
+        <p>Making homeownership affordable and accessible for every family across America.</p>
+        <a href="https://wa.me/12515010068" target="_blank" class="footer-wa"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>+1 (251) 501-0068</a>
+      </div>
+      <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="models.html">Browse Models</a></li><li><a href="financing.html">Financing Options</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-links"><h4>Home Types</h4><ul><li><a href="models.html">Tiny Homes</a></li><li><a href="models.html">Park Model RVs</a></li><li><a href="models.html">Single-Section Mobile Homes</a></li><li><a href="models.html">New Homes</a></li><li><a href="models.html">Used Homes</a></li></ul></div>
+      <div class="footer-contact"><h4>Contact Us</h4><p>📱 <a href="tel:+12515010068">+1 (251) 501-0068</a></p><p>💬 <a href="https://wa.me/12515010068" target="_blank">WhatsApp Chat</a></p><p>🕐 Mon–Sat: 8am – 7pm CST</p><p>📦 Nationwide Delivery Available</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Corcoran Lifestyle Properties. All rights reserved.</p><p>Serving families across the USA with affordable housing solutions.</p></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/12515010068?text=Hi!%20I%27m%20interested%20in%20a%20home%20from%20Corcoran%20Lifestyle%20Properties." target="_blank" class="wa-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="wa-float-tooltip">Chat with us!</span>
+</a>
+
+<script src="main.js"></script>
+
+<script>
+  // Filter functionality
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('[data-category]').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
