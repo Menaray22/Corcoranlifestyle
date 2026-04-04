@@ -2,12 +2,15 @@
 CORCORAN LIFESTYLE PROPERTIES — main.js
 ======================================= */
 
+// Mark body so CSS animations only apply when JS is running
+document.documentElement.classList.add(‘js-loaded’);
+
 // ── Navbar scroll effect ──
 const navbar = document.getElementById(‘navbar’);
 if (navbar) {
 window.addEventListener(‘scroll’, () => {
 navbar.classList.toggle(‘scrolled’, window.scrollY > 40);
-});
+}, { passive: true });
 }
 
 // ── Mobile hamburger ──
@@ -28,18 +31,39 @@ document.body.style.overflow = ‘’;
 }
 
 // ── Scroll-triggered animations ──
+function revealOnScroll() {
+const targets = document.querySelectorAll(’[data-aos], .model-card, .step, .tcard’);
+if (!targets.length) return;
+
+if (‘IntersectionObserver’ in window) {
 const observer = new IntersectionObserver((entries) => {
 entries.forEach((entry, i) => {
 if (entry.isIntersecting) {
-setTimeout(() => entry.target.classList.add(‘visible’), i * 100);
+// Small stagger per item
+setTimeout(() => {
+entry.target.classList.add(‘visible’);
+}, 80);
 observer.unobserve(entry.target);
 }
 });
-}, { threshold: 0.12 });
+}, { threshold: 0.08, rootMargin: ‘0px 0px -40px 0px’ });
 
-document.querySelectorAll(’[data-aos], .model-card, .step, .tcard’).forEach(el => {
-observer.observe(el);
-});
+```
+targets.forEach(el => observer.observe(el));
+```
+
+} else {
+// Fallback: show everything immediately
+targets.forEach(el => el.classList.add(‘visible’));
+}
+}
+
+// Run after DOM is ready
+if (document.readyState === ‘loading’) {
+document.addEventListener(‘DOMContentLoaded’, revealOnScroll);
+} else {
+revealOnScroll();
+}
 
 // ── FAQ accordion ──
 document.querySelectorAll(’.faq-q’).forEach(btn => {
@@ -51,27 +75,32 @@ if (!isOpen) item.classList.add(‘open’);
 });
 });
 
-// ── Smooth hero entry ──
+// ── Hero entry animation ──
 (function heroEntry() {
-const badge   = document.querySelector(’.hero-badge’);
-const title   = document.querySelector(’.hero-title’);
-const sub     = document.querySelector(’.hero-sub’);
-const ctas    = document.querySelector(’.hero-ctas’);
-const stats   = document.querySelector(’.hero-stats’);
-const scroll  = document.querySelector(’.hero-scroll’);
-const delay   = (el, ms, cls = ‘visible’) => el && setTimeout(() => el.style.cssText = ‘opacity:1;transform:none;transition:opacity 0.8s ease,transform 0.8s ease’, ms);
-[badge, title, sub, ctas, stats, scroll].forEach(el => {
-if (el) { el.style.opacity = ‘0’; el.style.transform = ‘translateY(28px)’; }
+const els = [
+document.querySelector(’.hero-badge’),
+document.querySelector(’.hero-title’),
+document.querySelector(’.hero-sub’),
+document.querySelector(’.hero-ctas’),
+document.querySelector(’.hero-stats’),
+document.querySelector(’.hero-scroll’),
+];
+els.forEach(el => {
+if (!el) return;
+el.style.opacity = ‘0’;
+el.style.transform = ‘translateY(28px)’;
 });
-delay(badge, 200);
-delay(title, 380);
-delay(sub,   540);
-delay(ctas,  680);
-delay(stats, 820);
-delay(scroll,1000);
+els.forEach((el, i) => {
+if (!el) return;
+setTimeout(() => {
+el.style.transition = ‘opacity 0.8s ease, transform 0.8s ease’;
+el.style.opacity = ‘1’;
+el.style.transform = ‘none’;
+}, 180 + i * 160);
+});
 })();
 
 // ── Stagger model cards ──
 document.querySelectorAll(’.model-card’).forEach((card, i) => {
-card.style.transitionDelay = `${i * 0.1}s`;
+card.style.transitionDelay = `${i * 0.08}s`;
 });
