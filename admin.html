@@ -2,400 +2,229 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel – Corcoran Lifestyle Properties</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    /* ── RESET & BASE ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 15px; }
-    body { font-family: 'DM Sans', sans-serif; background: #F0EDE8; color: #2A2520; min-height: 100vh; }
-
-```
-/* ── VARIABLES ── */
-:root {
-  --rust:    #B85C38;
-  --rust-dk: #9A4C2E;
-  --forest:  #3D5A40;
-  --forest-dk:#2C4230;
-  --gold:    #D4A853;
-  --sand:    #E8D9C0;
-  --cream:   #FAF6EF;
-  --warm:    #F5EFE3;
-  --charcoal:#2A2A2A;
-  --muted:   #7A6E64;
-  --white:   #FFFFFF;
-  --border:  #DDD4C5;
-  --danger:  #C0392B;
-  --success: #27AE60;
-  --shadow:  0 2px 12px rgba(60,40,20,0.10);
-  --shadow-lg:0 8px 32px rgba(60,40,20,0.15);
-  --radius:  10px;
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin — Corcoran Lifestyle Properties</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px}
+body{font-family:'DM Sans',sans-serif;background:#F0EDE8;color:#2A2520;min-height:100vh}
+:root{
+  --rust:#B85C38;--rust-dk:#9A4C2E;--forest:#3D5A40;--forest-dk:#2C4230;
+  --gold:#D4A853;--sand:#E8D9C0;--cream:#FAF6EF;--warm:#F5EFE3;
+  --charcoal:#2A2A2A;--muted:#7A6E64;--white:#fff;--border:#DDD4C5;
+  --danger:#C0392B;--success:#27AE60;--blue:#2980B9;
+  --shadow:0 2px 12px rgba(60,40,20,.1);--shadow-lg:0 8px 32px rgba(60,40,20,.15);
+  --r:10px;--r-lg:16px;
 }
-
-/* ── LOGIN SCREEN ── */
-.login-screen {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #2C4230 0%, #3D5A40 50%, #5C7A44 100%);
-  padding: 24px;
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2C4230,#3D5A40,#5C7A44);padding:24px}
+.login-box{background:#fff;border-radius:20px;padding:48px 40px;width:100%;max-width:400px;box-shadow:var(--shadow-lg);text-align:center}
+.login-box h1{font-family:'Playfair Display',serif;font-size:1.5rem;margin:8px 0 4px}
+.login-box p{color:var(--muted);font-size:.85rem;margin-bottom:28px}
+.login-box input{width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--r);font:inherit;font-size:.95rem;margin-bottom:12px;outline:none;transition:border .2s}
+.login-box input:focus{border-color:var(--forest)}
+.login-btn{width:100%;padding:13px;background:var(--forest);color:#fff;border:none;border-radius:var(--r);font:600 1rem 'DM Sans',sans-serif;cursor:pointer;transition:background .2s}
+.login-btn:hover{background:var(--forest-dk)}
+.login-err{color:var(--danger);font-size:.82rem;margin-top:10px;display:none}
+.hint-txt{color:#bbb;font-size:.72rem;margin-top:16px}
+/* LAYOUT */
+.app{display:none;min-height:100vh}
+.app.on{display:flex}
+/* SIDEBAR */
+.sidebar{width:232px;flex-shrink:0;background:var(--charcoal);display:flex;flex-direction:column;min-height:100vh;position:sticky;top:0;height:100vh;overflow-y:auto}
+.s-logo{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.s-logo .icon{font-size:1.5rem}
+.s-logo .name{font-family:'Playfair Display',serif;font-size:1rem;color:#fff;display:block;margin-top:4px}
+.s-logo .sub{font-size:.6rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em}
+.s-logo .badge{display:inline-block;background:var(--rust);color:#fff;font-size:.58rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+.s-nav{padding:12px 0;flex:1}
+.nav-i{display:flex;align-items:center;gap:11px;padding:11px 20px;color:rgba(255,255,255,.5);font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;border-left:3px solid transparent;user-select:none}
+.nav-i:hover{color:#fff;background:rgba(255,255,255,.05)}
+.nav-i.on{color:#fff;background:rgba(255,255,255,.08);border-left-color:var(--rust)}
+.nav-i .ic{width:18px;text-align:center;font-size:1rem}
+.s-foot{padding:18px 20px;border-top:1px solid rgba(255,255,255,.07)}
+.s-foot a{display:block;color:rgba(255,255,255,.38);font-size:.78rem;text-decoration:none;margin-bottom:7px;transition:color .2s}
+.s-foot a:hover{color:rgba(255,255,255,.75)}
+.logout-btn{width:100%;padding:9px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);font:.85rem 'DM Sans',sans-serif;cursor:pointer;transition:all .2s;margin-top:6px}
+.logout-btn:hover{background:rgba(200,80,56,.2);color:#ff8a75;border-color:rgba(200,80,56,.3)}
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;box-shadow:var(--shadow)}
+.topbar h2{font-family:'Playfair Display',serif;font-size:1.2rem}
+.topbar-r{display:flex;align-items:center;gap:10px}
+.stat-pill{background:var(--warm);padding:5px 14px;border-radius:20px;font-size:.8rem;font-weight:600;color:var(--forest)}
+.content{padding:28px;flex:1}
+/* PANELS */
+.panel{display:none}.panel.on{display:block}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px}
+.sc{background:#fff;border-radius:var(--r);padding:22px 18px;box-shadow:var(--shadow)}
+.sc .si{font-size:1.5rem;margin-bottom:8px}
+.sc .sv{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--charcoal)}
+.sc .sl{font-size:.73rem;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.06em}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);font:.85rem/1 'DM Sans',sans-serif;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none}
+.btn-p{background:var(--rust);color:#fff}.btn-p:hover{background:var(--rust-dk);transform:translateY(-1px)}
+.btn-g{background:var(--success);color:#fff}.btn-g:hover{background:#1e8449}
+.btn-d{background:var(--danger);color:#fff}.btn-d:hover{background:#a93226}
+.btn-b{background:var(--blue);color:#fff}.btn-b:hover{background:#2471a3}
+.btn-gh{background:var(--warm);color:var(--charcoal);border:1px solid var(--border)}.btn-gh:hover{background:var(--sand)}
+.btn-sm{padding:6px 13px;font-size:.78rem}
+/* SEC HEADER */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.sec-hd h3{font-family:'Playfair Display',serif;font-size:1.1rem}
+/* CARD */
+.card{background:#fff;border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow)}
+.card h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+/* FORM */
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.fg label{font-size:.75rem;font-weight:700;color:var(--charcoal);text-transform:uppercase;letter-spacing:.06em}
+.fg input,.fg select,.fg textarea{padding:10px 14px;border:2px solid var(--border);border-radius:var(--r);font:inherit;font-size:.9rem;color:var(--charcoal);background:var(--cream);outline:none;transition:border .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--forest);background:#fff}
+.fg textarea{resize:vertical;min-height:80px}
+.fg .hint{font-size:.72rem;color:var(--muted)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg-full{grid-column:1/-1}
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-row .tl{font-size:.88rem;font-weight:500}
+.toggle-row .td{font-size:.75rem;color:var(--muted)}
+.toggle{position:relative;width:42px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.ts{position:absolute;inset:0;background:var(--border);border-radius:22px;cursor:pointer;transition:background .2s}
+.ts::before{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;left:3px;top:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.toggle input:checked+.ts{background:var(--forest)}
+.toggle input:checked+.ts::before{transform:translateX(20px)}
+/* FORM TABS */
+.ftabs{display:flex;gap:3px;margin-bottom:22px;background:var(--warm);border-radius:var(--r);padding:3px}
+.ftab{flex:1;padding:8px;text-align:center;border-radius:8px;cursor:pointer;font:.82rem/1 'DM Sans',sans-serif;font-weight:600;color:var(--muted);transition:all .2s;border:none;background:none}
+.ftab.on{background:#fff;color:var(--charcoal);box-shadow:var(--shadow)}
+.ftp{display:none}.ftp.on{display:block}
+/* PHOTO UPLOAD */
+.upload-area{border:2px dashed var(--border);border-radius:var(--r);padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:var(--cream);position:relative}
+.upload-area:hover,.upload-area.dv{border-color:var(--forest);background:rgba(61,90,64,.04)}
+.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.u-icon{font-size:2.2rem;margin-bottom:8px}
+.u-txt{font-size:.88rem;color:var(--muted)}.u-txt strong{color:var(--forest)}
+.u-txt small{display:block;margin-top:3px;font-size:.72rem}
+.previews{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.prev{width:90px;height:72px;border-radius:8px;overflow:hidden;position:relative;box-shadow:var(--shadow)}
+.prev img{width:100%;height:100%;object-fit:cover;display:block}
+.prev .del{position:absolute;top:3px;right:3px;background:rgba(0,0,0,.65);color:#fff;border:none;width:18px;height:18px;border-radius:50%;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.prev .main-badge{position:absolute;bottom:3px;left:3px;background:var(--gold);color:#fff;font-size:.52rem;font-weight:700;padding:2px 5px;border-radius:4px;text-transform:uppercase}
+/* HOMES LIST */
+.homes-list{display:flex;flex-direction:column;gap:12px}
+.hrow{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);display:flex;align-items:stretch;transition:box-shadow .2s}
+.hrow:hover{box-shadow:var(--shadow-lg)}
+.hthumb{width:110px;flex-shrink:0;background:var(--sand);position:relative;overflow:hidden}
+.hthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.hthumb .nimg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--muted);background:var(--warm)}
+.hinfo{flex:1;padding:14px 18px;display:flex;flex-direction:column;justify-content:center}
+.hinfo .hname{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:4px}
+.hmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.htag{background:var(--warm);color:var(--muted);font-size:.68rem;font-weight:600;padding:3px 9px;border-radius:20px}
+.htag.nt{background:rgba(61,90,64,.12);color:var(--forest)}
+.htag.ut{background:rgba(212,168,83,.15);color:#8B6914}
+.htag.ft{background:rgba(184,92,56,.12);color:var(--rust)}
+.hprice{font-weight:700;color:var(--charcoal);font-size:.92rem;margin-top:5px}
+.hmon{font-size:.76rem;color:var(--muted)}
+.hacts{padding:14px;display:flex;flex-direction:column;gap:7px;justify-content:center}
+/* EMPTY STATE */
+.empty{text-align:center;padding:56px 24px;color:var(--muted)}
+.empty .ei{font-size:3.5rem;margin-bottom:14px}
+.empty h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--charcoal);margin-bottom:8px}
+.empty p{font-size:.88rem;max-width:340px;margin:0 auto 20px;line-height:1.65}
+/* FORM FOOTER */
+.ff{display:flex;gap:10px;margin-top:24px;padding-top:18px;border-bottom:1px solid var(--border);border-top:1px solid var(--border);padding-bottom:0}
+/* CODE BOX */
+.codebox{background:#1a1a2e;color:#a8d8a8;border-radius:var(--r);padding:18px;font:12px/1.6 'Courier New',monospace;max-height:320px;overflow-y:auto;white-space:pre-wrap;word-break:break-all}
+/* TOAST */
+.toasts{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--charcoal);color:#fff;padding:12px 18px;border-radius:var(--r);font-size:.86rem;font-weight:500;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:9px;animation:tIn .3s ease;max-width:300px}
+.toast.ok{background:var(--success)}.toast.err{background:var(--danger)}.toast.info{background:var(--blue)}
+@keyframes tIn{from{transform:translateX(110%);opacity:0}to{transform:none;opacity:1}}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:16px;padding:32px;max-width:440px;width:100%;box-shadow:var(--shadow-lg);text-align:center}
+.modal h3{font-family:'Playfair Display',serif;margin-bottom:10px}
+.modal p{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+.modal-btns{display:flex;gap:10px;justify-content:center}
+/* SECTION EDITOR ITEMS */
+.se-item{background:#fff;border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow);margin-bottom:10px}
+.se-item .se-hd{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.se-item .se-hd h4{font-family:'Playfair Display',serif;font-size:.95rem}
+.se-item .se-body{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.se-item.open .se-body{display:block}
+.se-item .arrow{transition:transform .25s;color:var(--muted)}
+.se-item.open .arrow{transform:rotate(180deg)}
+/* PHOTO MANAGER */
+.pm-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.pm-item{position:relative;width:120px;height:96px;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);cursor:pointer}
+.pm-item img{width:100%;height:100%;object-fit:cover;display:block}
+.pm-item .pm-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);color:#fff;border:none;width:20px;height:20px;border-radius:50%;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.pm-item .pm-name{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:.58rem;padding:3px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* PHOTO DOWNLOAD BOX */
+.dl-box{background:var(--warm);border:2px dashed var(--border);border-radius:var(--r-lg);padding:32px;text-align:center;margin-top:16px}
+.dl-box .dl-icon{font-size:3rem;margin-bottom:12px}
+.dl-box h4{font-family:'Playfair Display',serif;margin-bottom:8px}
+.dl-box p{color:var(--muted);font-size:.85rem;margin-bottom:20px;line-height:1.6}
+/* INFO BOX */
+.info-box{background:rgba(61,90,64,.08);border-left:4px solid var(--forest);border-radius:var(--r);padding:16px 18px;font-size:.85rem;line-height:1.65;margin-top:12px}
+.info-box strong{color:var(--forest)}
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{display:none}.fg-row{grid-template-columns:1fr}
+  .content{padding:16px}.topbar{padding:12px 16px}
 }
-.login-box {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 48px 40px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-}
-.login-logo { font-size: 2.5rem; margin-bottom: 8px; }
-.login-box h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 6px; }
-.login-box p { color: var(--muted); font-size: 0.88rem; margin-bottom: 32px; }
-.login-box input {
-  width: 100%; padding: 13px 16px; border: 2px solid var(--border);
-  border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem; margin-bottom: 14px; outline: none; transition: border 0.2s;
-}
-.login-box input:focus { border-color: var(--forest); }
-.login-box .btn-login {
-  width: 100%; padding: 14px; background: var(--forest); color: var(--white);
-  border: none; border-radius: var(--radius); font-size: 1rem; font-weight: 600;
-  cursor: pointer; transition: background 0.2s;
-}
-.login-box .btn-login:hover { background: var(--forest-dk); }
-.login-error { color: var(--danger); font-size: 0.85rem; margin-top: 10px; display: none; }
-
-/* ── LAYOUT ── */
-.app { display: none; min-height: 100vh; }
-.app.visible { display: flex; }
-
-/* Sidebar */
-.sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  background: var(--charcoal);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-}
-.sidebar-logo {
-  padding: 28px 24px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.sidebar-logo .logo-icon { font-size: 1.5rem; }
-.sidebar-logo .logo-main { font-family: 'Playfair Display', serif; font-size: 1rem; color: #fff; display: block; margin-top: 4px; }
-.sidebar-logo .logo-sub { font-size: 0.65rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
-.sidebar-logo .admin-badge { display: inline-block; background: var(--rust); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
-
-.sidebar-nav { padding: 16px 0; flex: 1; }
-.nav-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 24px; color: rgba(255,255,255,0.55);
-  font-size: 0.88rem; font-weight: 500; cursor: pointer;
-  transition: all 0.2s; border-left: 3px solid transparent;
-}
-.nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
-.nav-item.active { color: #fff; background: rgba(255,255,255,0.08); border-left-color: var(--rust); }
-.nav-item .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
-
-.sidebar-footer {
-  padding: 20px 24px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-.sidebar-footer a {
-  display: block; color: rgba(255,255,255,0.4); font-size: 0.8rem;
-  text-decoration: none; margin-bottom: 8px; transition: color 0.2s;
-}
-.sidebar-footer a:hover { color: rgba(255,255,255,0.8); }
-.btn-logout {
-  width: 100%; padding: 10px; background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: var(--radius); font-size: 0.85rem; cursor: pointer;
-  transition: all 0.2s; margin-top: 8px;
-}
-.btn-logout:hover { background: rgba(200,80,56,0.2); color: #ff8a75; border-color: rgba(200,80,56,0.3); }
-
-/* Main content */
-.main { flex: 1; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-.topbar {
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  padding: 18px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: var(--shadow);
-}
-.topbar h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
-.topbar-right { display: flex; align-items: center; gap: 12px; }
-.topbar-stat { background: var(--warm); padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; color: var(--forest); }
-
-.content { padding: 32px; flex: 1; }
-
-/* ── PANELS ── */
-.panel { display: none; }
-.panel.active { display: block; }
-
-/* ── STATS ROW ── */
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 32px; }
-.stat-card {
-  background: var(--white); border-radius: var(--radius); padding: 24px 20px;
-  box-shadow: var(--shadow);
-}
-.stat-card .s-icon { font-size: 1.6rem; margin-bottom: 10px; }
-.stat-card .s-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--charcoal); }
-.stat-card .s-label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
-
-/* ── SECTION HEADER ── */
-.sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.sec-header h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; }
-
-/* ── BUTTONS ── */
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
-.btn-primary { background: var(--rust); color: #fff; }
-.btn-primary:hover { background: var(--rust-dk); transform: translateY(-1px); }
-.btn-success { background: var(--success); color: #fff; }
-.btn-success:hover { background: #219150; }
-.btn-danger { background: var(--danger); color: #fff; }
-.btn-danger:hover { background: #a93226; }
-.btn-ghost { background: var(--warm); color: var(--charcoal); border: 1px solid var(--border); }
-.btn-ghost:hover { background: var(--sand); }
-.btn-sm { padding: 7px 14px; font-size: 0.8rem; }
-
-/* ── HOMES LIST ── */
-.homes-list { display: flex; flex-direction: column; gap: 14px; }
-.home-row {
-  background: var(--white); border-radius: var(--radius); padding: 0;
-  box-shadow: var(--shadow); display: flex; align-items: stretch; overflow: hidden;
-  transition: box-shadow 0.2s;
-}
-.home-row:hover { box-shadow: var(--shadow-lg); }
-.home-thumb {
-  width: 120px; flex-shrink: 0;
-  background: var(--sand);
-  position: relative; overflow: hidden;
-}
-.home-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.home-thumb .no-img {
-  width: 100%; height: 100%; display: flex; align-items: center;
-  justify-content: center; font-size: 2.5rem; color: var(--muted);
-  background: var(--warm);
-}
-.home-info { flex: 1; padding: 16px 20px; display: flex; flex-direction: column; justify-content: center; }
-.home-info .home-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 4px; }
-.home-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-.home-tag { background: var(--warm); color: var(--muted); font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
-.home-tag.new-tag { background: rgba(61,90,64,0.12); color: var(--forest); }
-.home-tag.used-tag { background: rgba(212,168,83,0.15); color: #8B6914; }
-.home-tag.featured-tag { background: rgba(184,92,56,0.12); color: var(--rust); }
-.home-price { font-weight: 700; color: var(--charcoal); font-size: 0.95rem; margin-top: 6px; }
-.home-monthly { font-size: 0.8rem; color: var(--muted); }
-.home-actions { padding: 16px; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
-
-/* ── FORM ── */
-.form-card {
-  background: var(--white); border-radius: var(--radius); padding: 32px;
-  box-shadow: var(--shadow); max-width: 820px;
-}
-.form-card h3 { font-family: 'Playfair Display', serif; margin-bottom: 24px; font-size: 1.2rem; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-group.full { grid-column: 1 / -1; }
-.form-group label { font-size: 0.8rem; font-weight: 600; color: var(--charcoal); text-transform: uppercase; letter-spacing: 0.06em; }
-.form-group input, .form-group select, .form-group textarea {
-  padding: 11px 14px; border: 2px solid var(--border); border-radius: var(--radius);
-  font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--charcoal);
-  background: var(--cream); outline: none; transition: border 0.2s;
-}
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--forest); background: #fff; }
-.form-group textarea { resize: vertical; min-height: 90px; }
-.form-group .hint { font-size: 0.75rem; color: var(--muted); }
-
-/* Toggle */
-.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
-.toggle-row:last-child { border-bottom: none; }
-.toggle-row label { font-size: 0.9rem; font-weight: 500; }
-.toggle-row .toggle-desc { font-size: 0.78rem; color: var(--muted); }
-.toggle {
-  position: relative; width: 44px; height: 24px; flex-shrink: 0;
-}
-.toggle input { opacity: 0; width: 0; height: 0; }
-.toggle-slider {
-  position: absolute; inset: 0; background: var(--border);
-  border-radius: 24px; cursor: pointer; transition: background 0.2s;
-}
-.toggle-slider::before {
-  content: ''; position: absolute; width: 18px; height: 18px;
-  background: #fff; border-radius: 50%; left: 3px; top: 3px;
-  transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-.toggle input:checked + .toggle-slider { background: var(--forest); }
-.toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
-
-/* Photo upload */
-.photo-upload-area {
-  border: 2px dashed var(--border); border-radius: var(--radius);
-  padding: 32px; text-align: center; cursor: pointer;
-  transition: all 0.2s; background: var(--cream); position: relative;
-}
-.photo-upload-area:hover, .photo-upload-area.dragover { border-color: var(--forest); background: rgba(61,90,64,0.04); }
-.photo-upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.upload-icon { font-size: 2.5rem; margin-bottom: 10px; }
-.upload-text { font-size: 0.9rem; color: var(--muted); }
-.upload-text strong { color: var(--forest); }
-.upload-text small { display: block; margin-top: 4px; font-size: 0.75rem; }
-
-.photo-previews { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-.photo-preview {
-  width: 100px; height: 80px; border-radius: 8px; overflow: hidden;
-  position: relative; box-shadow: var(--shadow);
-}
-.photo-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo-preview .del-photo {
-  position: absolute; top: 4px; right: 4px;
-  background: rgba(0,0,0,0.6); color: #fff; border: none;
-  width: 20px; height: 20px; border-radius: 50%; font-size: 0.7rem;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-}
-.photo-preview .primary-badge {
-  position: absolute; bottom: 4px; left: 4px;
-  background: var(--gold); color: #fff; font-size: 0.55rem; font-weight: 700;
-  padding: 2px 5px; border-radius: 4px; text-transform: uppercase;
-}
-
-/* Form footer */
-.form-footer { display: flex; gap: 12px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
-
-/* ── TOAST ── */
-.toast-container { position: fixed; bottom: 28px; right: 28px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
-.toast {
-  background: var(--charcoal); color: #fff; padding: 14px 20px;
-  border-radius: var(--radius); font-size: 0.88rem; font-weight: 500;
-  box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 10px;
-  animation: slideIn 0.3s ease; max-width: 320px;
-}
-.toast.success { background: var(--success); }
-.toast.error { background: var(--danger); }
-@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: none; opacity: 1; } }
-
-/* ── MODAL ── */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-  display: none; align-items: center; justify-content: center;
-  z-index: 200; padding: 24px;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--white); border-radius: 16px; padding: 36px;
-  max-width: 460px; width: 100%; box-shadow: var(--shadow-lg); text-align: center;
-}
-.modal h3 { font-family: 'Playfair Display', serif; margin-bottom: 12px; }
-.modal p { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
-.modal-btns { display: flex; gap: 12px; justify-content: center; }
-
-/* ── EMPTY STATE ── */
-.empty-state { text-align: center; padding: 60px 32px; color: var(--muted); }
-.empty-state .empty-icon { font-size: 4rem; margin-bottom: 16px; }
-.empty-state h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--charcoal); margin-bottom: 10px; }
-.empty-state p { font-size: 0.9rem; max-width: 360px; margin: 0 auto 24px; line-height: 1.65; }
-
-/* ── TABS (in add/edit form) ── */
-.form-tabs { display: flex; gap: 4px; margin-bottom: 24px; background: var(--warm); border-radius: var(--radius); padding: 4px; }
-.form-tab { flex: 1; padding: 9px; text-align: center; border-radius: 8px; cursor: pointer; font-size: 0.84rem; font-weight: 600; color: var(--muted); transition: all 0.2s; border: none; background: none; }
-.form-tab.active { background: var(--white); color: var(--charcoal); box-shadow: var(--shadow); }
-
-.form-tab-panel { display: none; }
-.form-tab-panel.active { display: block; }
-
-/* ── CODE EXPORT ── */
-.code-box {
-  background: #1E1E1E; color: #D4D4D4; border-radius: var(--radius);
-  padding: 20px; font-family: 'Courier New', monospace; font-size: 0.78rem;
-  line-height: 1.6; max-height: 360px; overflow-y: auto; white-space: pre-wrap;
-  word-break: break-all;
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .sidebar { display: none; }
-  .form-grid { grid-template-columns: 1fr; }
-  .content { padding: 20px 16px; }
-  .topbar { padding: 14px 16px; }
-  .home-thumb { width: 80px; }
-}
-```
-
-  </style>
+</style>
 </head>
 <body>
 
-<!-- ══════════════════════════════
-     LOGIN SCREEN
-════════════════════════════════ -->
+<!-- LOGIN -->
 
-<div class="login-screen" id="loginScreen">
+<div class="login-wrap" id="loginWrap">
   <div class="login-box">
-    <div class="login-logo">🏡</div>
+    <div style="font-size:2.2rem">🏡</div>
     <h1>Admin Panel</h1>
     <p>Corcoran Lifestyle Properties</p>
-    <input type="text" id="loginUser" placeholder="Username" autocomplete="username" />
-    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password"
-           onkeydown="if(event.key==='Enter')doLogin()" />
-    <button class="btn-login" onclick="doLogin()">Sign In</button>
-    <div class="login-error" id="loginError">Incorrect username or password.</div>
-    <p style="margin-top:20px;font-size:0.75rem;color:#aaa;">Default: admin / corcoran2025</p>
+    <input type="text" id="lu" placeholder="Username" autocomplete="username"/>
+    <input type="password" id="lp" placeholder="Password" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')login()"/>
+    <button class="login-btn" onclick="login()">Sign In →</button>
+    <div class="login-err" id="lerr">Incorrect username or password</div>
+    <p class="hint-txt">Default: admin / corcoran2025</p>
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     MAIN APP
-════════════════════════════════ -->
+<!-- APP -->
 
 <div class="app" id="app">
-
   <!-- SIDEBAR -->
-
   <aside class="sidebar">
-    <div class="sidebar-logo">
-      <span class="logo-icon">🏡</span>
-      <span class="logo-main">Corcoran</span>
-      <span class="logo-sub">Lifestyle Properties</span>
-      <span class="admin-badge">Admin</span>
+    <div class="s-logo">
+      <span class="icon">🏡</span>
+      <span class="name">Corcoran</span>
+      <span class="sub">Lifestyle Properties</span>
+      <span class="badge">Admin</span>
     </div>
-    <nav class="sidebar-nav">
-      <div class="nav-item active" onclick="showPanel('dashboard')">
-        <span class="nav-icon">📊</span> Dashboard
-      </div>
-      <div class="nav-item" onclick="showPanel('homes')">
-        <span class="nav-icon">🏠</span> All Homes
-      </div>
-      <div class="nav-item" onclick="showPanel('add')">
-        <span class="nav-icon">➕</span> Add New Home
-      </div>
-      <div class="nav-item" onclick="showPanel('export')">
-        <span class="nav-icon">📤</span> Export / Embed
-      </div>
-      <div class="nav-item" onclick="showPanel('settings')">
-        <span class="nav-icon">⚙️</span> Settings
-      </div>
+    <nav class="s-nav">
+      <div class="nav-i on" onclick="go('dashboard')"><span class="ic">📊</span>Dashboard</div>
+      <div class="nav-i"    onclick="go('homes')">   <span class="ic">🏠</span>All Homes</div>
+      <div class="nav-i"    onclick="go('add')">     <span class="ic">➕</span>Add Home</div>
+      <div class="nav-i"    onclick="go('photos')">  <span class="ic">🖼️</span>Photo Library</div>
+      <div class="nav-i"    onclick="go('content')"> <span class="ic">✏️</span>Site Content</div>
+      <div class="nav-i"    onclick="go('export')">  <span class="ic">📤</span>Export</div>
+      <div class="nav-i"    onclick="go('settings')"><span class="ic">⚙️</span>Settings</div>
     </nav>
-    <div class="sidebar-footer">
+    <div class="s-foot">
       <a href="index.html" target="_blank">🌐 View Public Site</a>
       <a href="models.html" target="_blank">🏡 View Models Page</a>
-      <button class="btn-logout" onclick="doLogout()">🚪 Log Out</button>
+      <button class="logout-btn" onclick="logout()">🚪 Log Out</button>
     </div>
   </aside>
 
@@ -403,227 +232,264 @@
 
   <div class="main">
     <div class="topbar">
-      <h2 id="topbarTitle">Dashboard</h2>
-      <div class="topbar-right">
-        <span class="topbar-stat" id="topbarStat">Loading…</span>
-        <button class="btn btn-primary btn-sm" onclick="showPanel('add')">+ Add Home</button>
+      <h2 id="ttl">Dashboard</h2>
+      <div class="topbar-r">
+        <span class="stat-pill" id="tpill">Loading…</span>
+        <button class="btn btn-p btn-sm" onclick="go('add')">+ Add Home</button>
       </div>
     </div>
+    <div class="content">
 
 ```
-<div class="content">
-
-  <!-- ── DASHBOARD ── -->
-  <div class="panel active" id="panel-dashboard">
+  <!-- DASHBOARD -->
+  <div class="panel on" id="p-dashboard">
     <div class="stats-row" id="statsRow"></div>
-    <div class="sec-header">
+    <div class="sec-hd">
       <h3>Recent Listings</h3>
-      <button class="btn btn-ghost btn-sm" onclick="showPanel('homes')">View All →</button>
+      <button class="btn btn-gh btn-sm" onclick="go('homes')">View All →</button>
     </div>
-    <div id="recentHomes"></div>
+    <div id="recentList"></div>
   </div>
 
-  <!-- ── ALL HOMES ── -->
-  <div class="panel" id="panel-homes">
-    <div class="sec-header">
-      <h3>All Homes (<span id="homeCount">0</span>)</h3>
-      <div style="display:flex;gap:10px;">
-        <select id="filterType" onchange="renderHomes()" style="padding:8px 12px;border:2px solid var(--border);border-radius:var(--radius);font-size:0.85rem;background:var(--white);">
+  <!-- ALL HOMES -->
+  <div class="panel" id="p-homes">
+    <div class="sec-hd">
+      <h3>All Homes (<span id="hcount">0</span>)</h3>
+      <div style="display:flex;gap:8px">
+        <select id="typeFilter" onchange="renderHomes()" style="padding:7px 12px;border:2px solid var(--border);border-radius:var(--r);font-size:.83rem;background:#fff">
           <option value="">All Types</option>
-          <option value="Park Model RV">Park Model RV</option>
-          <option value="Tiny Home">Tiny Home</option>
-          <option value="Mobile Home">Mobile Home</option>
+          <option>Park Model RV</option><option>Tiny Home</option><option>Mobile Home</option>
         </select>
-        <button class="btn btn-primary btn-sm" onclick="showPanel('add')">+ Add Home</button>
+        <button class="btn btn-p btn-sm" onclick="go('add')">+ Add Home</button>
       </div>
     </div>
     <div class="homes-list" id="homesList"></div>
   </div>
 
-  <!-- ── ADD / EDIT HOME ── -->
-  <div class="panel" id="panel-add">
-    <div class="form-card">
+  <!-- ADD / EDIT HOME -->
+  <div class="panel" id="p-add">
+    <div class="card" style="max-width:820px">
       <h3 id="formTitle">➕ Add New Home</h3>
-      <input type="hidden" id="editId" value="" />
-
-      <div class="form-tabs">
-        <button class="form-tab active" onclick="switchTab('info')">📋 Info & Pricing</button>
-        <button class="form-tab" onclick="switchTab('photos')">📷 Photos</button>
-        <button class="form-tab" onclick="switchTab('details')">🔧 Details & Settings</button>
+      <input type="hidden" id="eid"/>
+      <div class="ftabs">
+        <button class="ftab on" onclick="tab('info')">📋 Info & Price</button>
+        <button class="ftab"    onclick="tab('photos')">📷 Photos</button>
+        <button class="ftab"    onclick="tab('details')">🔧 Settings</button>
       </div>
 
-      <!-- TAB: Info -->
-      <div class="form-tab-panel active" id="tab-info">
-        <div class="form-grid">
-          <div class="form-group full">
-            <label>Home Name / Model *</label>
-            <input id="f-name" type="text" placeholder="e.g. The Hacienda" />
+      <!-- TAB INFO -->
+      <div class="ftp on" id="t-info">
+        <div class="fg-row">
+          <div class="fg fg-full"><label>Home Name *</label><input id="f-name" placeholder="e.g. The Hacienda"/></div>
+          <div class="fg"><label>Type *</label>
+            <select id="f-type"><option value="">Select…</option><option>Park Model RV</option><option>Tiny Home</option><option>Mobile Home</option></select>
           </div>
-          <div class="form-group">
-            <label>Home Type *</label>
-            <select id="f-type">
-              <option value="">Select type…</option>
-              <option>Park Model RV</option>
-              <option>Tiny Home</option>
-              <option>Mobile Home</option>
-            </select>
+          <div class="fg"><label>Condition</label>
+            <select id="f-cond"><option>New</option><option>Used</option><option>New & Used</option></select>
           </div>
-          <div class="form-group">
-            <label>Condition</label>
-            <select id="f-condition">
-              <option value="New">New</option>
-              <option value="Used">Used</option>
-              <option value="New & Used">New & Used</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Price (e.g. $42,900)</label>
-            <input id="f-price" type="text" placeholder="From $42,900" />
-          </div>
-          <div class="form-group">
-            <label>Down Payment (e.g. $1,500)</label>
-            <input id="f-down" type="text" placeholder="$1,500" />
-          </div>
-          <div class="form-group">
-            <label>Monthly Payment (e.g. $399/mo)</label>
-            <input id="f-monthly" type="text" placeholder="$399/mo" />
-          </div>
-          <div class="form-group">
-            <label>Square Footage</label>
-            <input id="f-sqft" type="text" placeholder="400 sq ft" />
-          </div>
-          <div class="form-group">
-            <label>Bedrooms</label>
-            <input id="f-beds" type="text" placeholder="1–2" />
-          </div>
-          <div class="form-group">
-            <label>Bathrooms</label>
-            <input id="f-baths" type="text" placeholder="1 Full Bath" />
-          </div>
-          <div class="form-group">
-            <label>Badge Label (optional)</label>
-            <input id="f-badge" type="text" placeholder="🔥 Best Seller" />
-          </div>
-          <div class="form-group full">
-            <label>Description</label>
-            <textarea id="f-desc" placeholder="Write a short description of this home…"></textarea>
-          </div>
+          <div class="fg"><label>Price</label><input id="f-price" placeholder="From $42,900"/></div>
+          <div class="fg"><label>Down Payment</label><input id="f-down" placeholder="$1,500"/></div>
+          <div class="fg"><label>Monthly Payment</label><input id="f-mo" placeholder="$399/mo"/></div>
+          <div class="fg"><label>Square Footage</label><input id="f-sqft" placeholder="400 sq ft"/></div>
+          <div class="fg"><label>Bedrooms</label><input id="f-beds" placeholder="1–2"/></div>
+          <div class="fg"><label>Bathrooms</label><input id="f-baths" placeholder="1 Full Bath"/></div>
+          <div class="fg"><label>Badge (optional)</label><input id="f-badge" placeholder="🔥 Best Seller"/></div>
+          <div class="fg fg-full"><label>Description</label><textarea id="f-desc" placeholder="Short description of this home…"></textarea></div>
         </div>
       </div>
 
-      <!-- TAB: Photos -->
-      <div class="form-tab-panel" id="tab-photos">
-        <div class="photo-upload-area" id="uploadArea">
-          <input type="file" id="photoInput" accept="image/*" multiple onchange="handlePhotoUpload(this)" />
-          <div class="upload-icon">📷</div>
-          <div class="upload-text">
-            <strong>Click to upload photos</strong> or drag & drop
-            <small>JPG, PNG, WEBP · Up to 5 photos · First photo = main listing image</small>
+      <!-- TAB PHOTOS -->
+      <div class="ftp" id="t-photos">
+        <div class="upload-area" id="uploadArea">
+          <input type="file" id="photoIn" accept="image/*" multiple onchange="handleFiles(this)"/>
+          <div class="u-icon">📷</div>
+          <div class="u-txt"><strong>Click to upload</strong> or drag & drop<small>JPG · PNG · WEBP — up to 5 photos · First = main image</small></div>
+        </div>
+        <div class="previews" id="prevs"></div>
+        <div style="margin-top:18px">
+          <p style="font-size:.83rem;color:var(--muted);margin-bottom:8px">💡 Or paste a photo URL (Unsplash, Cloudinary, Google Drive direct link, etc.)</p>
+          <div style="display:flex;gap:8px">
+            <input type="text" id="urlIn" placeholder="https://…" style="flex:1;padding:9px 13px;border:2px solid var(--border);border-radius:var(--r);font:inherit;font-size:.88rem;outline:none"/>
+            <button class="btn btn-gh" onclick="addUrl()">Add URL</button>
           </div>
         </div>
-        <div class="photo-previews" id="photoPreviews"></div>
-        <div style="margin-top:20px;">
-          <p style="font-size:0.85rem;color:var(--muted);">💡 <strong>Or use a photo URL</strong> (Unsplash, your own CDN, etc.)</p>
-          <div style="display:flex;gap:10px;margin-top:8px;">
-            <input type="text" id="photoUrlInput" placeholder="https://images.unsplash.com/…?w=800" style="flex:1;padding:10px 14px;border:2px solid var(--border);border-radius:var(--radius);font-size:0.88rem;outline:none;" />
-            <button class="btn btn-ghost" onclick="addPhotoUrl()">Add URL</button>
-          </div>
+        <div class="info-box" style="margin-top:16px">
+          <strong>📌 Photo Tip:</strong> Uploaded photos are saved as base64 inside your browser's localStorage.
+          To use them on your live GitHub Pages site, go to <strong>Photo Library → Download Photos</strong> — it will
+          save all photos as a zip. Extract and upload to your GitHub repo, then reference them as
+          <code>photos/my-photo.jpg</code> in your listings.
         </div>
       </div>
 
-      <!-- TAB: Details -->
-      <div class="form-tab-panel" id="tab-details">
+      <!-- TAB DETAILS -->
+      <div class="ftp" id="t-details">
         <div class="toggle-row">
-          <div>
-            <label>Featured on Homepage</label>
-            <div class="toggle-desc">Show in the Featured Homes section</div>
-          </div>
-          <label class="toggle"><input type="checkbox" id="f-featured" checked /><span class="toggle-slider"></span></label>
+          <div><div class="tl">Featured on Homepage</div><div class="td">Show in Featured Homes section</div></div>
+          <label class="toggle"><input type="checkbox" id="f-feat" checked/><span class="ts"></span></label>
         </div>
         <div class="toggle-row">
-          <div>
-            <label>Available / Active Listing</label>
-            <div class="toggle-desc">Hide this home from the public site if sold/reserved</div>
-          </div>
-          <label class="toggle"><input type="checkbox" id="f-active" checked /><span class="toggle-slider"></span></label>
+          <div><div class="tl">Active Listing</div><div class="td">Uncheck to hide from public site (sold/reserved)</div></div>
+          <label class="toggle"><input type="checkbox" id="f-active" checked/><span class="ts"></span></label>
         </div>
         <div class="toggle-row">
-          <div>
-            <label>Financing Available</label>
-            <div class="toggle-desc">Show seller financing badge on this listing</div>
-          </div>
-          <label class="toggle"><input type="checkbox" id="f-financing" checked /><span class="toggle-slider"></span></label>
+          <div><div class="tl">Seller Financing Available</div><div class="td">Show financing badge on this listing</div></div>
+          <label class="toggle"><input type="checkbox" id="f-fin" checked/><span class="ts"></span></label>
         </div>
-        <div class="form-group" style="margin-top:20px;">
-          <label>WhatsApp Pre-filled Message (for this home)</label>
-          <input id="f-waMsg" type="text" placeholder="Hi! I'm interested in The Hacienda. Can you tell me more?" />
-          <span class="hint">Customers clicking WhatsApp will see this pre-typed</span>
+        <div class="fg" style="margin-top:18px">
+          <label>WhatsApp Pre-filled Message</label>
+          <input id="f-wa" placeholder="Hi! I'm interested in The Hacienda. Can you tell me more?"/>
+          <span class="hint">Customers tapping WhatsApp will see this message pre-typed</span>
         </div>
-        <div class="form-group" style="margin-top:16px;">
-          <label>Sort Order (lower = shows first)</label>
-          <input id="f-order" type="number" value="10" min="1" max="99" />
+        <div class="fg">
+          <label>Sort Order (lower = appears first)</label>
+          <input id="f-ord" type="number" value="10" min="1" max="99"/>
         </div>
       </div>
 
-      <div class="form-footer">
-        <button class="btn btn-primary" onclick="saveHome()">💾 Save Home</button>
-        <button class="btn btn-ghost" onclick="resetForm()">✕ Clear Form</button>
+      <div class="ff">
+        <button class="btn btn-g" onclick="saveHome()">💾 Save Home</button>
+        <button class="btn btn-gh" onclick="resetForm()">✕ Clear</button>
       </div>
     </div>
   </div>
 
-  <!-- ── EXPORT ── -->
-  <div class="panel" id="panel-export">
-    <div class="form-card">
-      <h3>📤 Export Listings for Your Website</h3>
-      <p style="color:var(--muted);margin-bottom:20px;font-size:0.9rem;">Copy this JavaScript data block and paste it into your <code>inventory.js</code> file. Your website will read from it automatically.</p>
-      <div class="sec-header" style="margin-bottom:12px;">
-        <h3 style="font-size:1rem;">Generated inventory.js</h3>
-        <button class="btn btn-primary btn-sm" onclick="copyExport()">📋 Copy Code</button>
+  <!-- PHOTO LIBRARY -->
+  <div class="panel" id="p-photos">
+    <div class="card">
+      <h3>🖼️ Photo Library</h3>
+      <p style="color:var(--muted);font-size:.88rem;margin-bottom:16px">All photos uploaded to your listings. Click a photo to copy its reference URL.</p>
+      <div class="sec-hd" style="margin-bottom:12px">
+        <span id="photoCount" style="color:var(--muted);font-size:.85rem">0 photos stored</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-b btn-sm" onclick="downloadAllPhotos()">⬇️ Download All Photos (ZIP)</button>
+          <button class="btn btn-d btn-sm" onclick="confirmClearPhotos()">🗑 Clear All Photos</button>
+        </div>
       </div>
-      <div class="code-box" id="exportCode"></div>
-      <div style="margin-top:24px;padding:20px;background:var(--warm);border-radius:var(--radius);border-left:4px solid var(--forest);">
-        <strong style="font-size:0.9rem;">📝 How to use:</strong>
-        <ol style="margin-top:10px;padding-left:20px;font-size:0.85rem;color:var(--muted);line-height:1.9;">
-          <li>Click <strong>Copy Code</strong> above</li>
-          <li>Create a file called <code>inventory.js</code> in your website folder</li>
-          <li>Paste the code and save</li>
-          <li>Add <code>&lt;script src="inventory.js"&gt;&lt;/script&gt;</code> to your HTML pages</li>
-          <li>Your homes will now appear dynamically from this data</li>
-        </ol>
+      <div class="pm-grid" id="photoLib"></div>
+      <div class="dl-box">
+        <div class="dl-icon">📁</div>
+        <h4>How to use photos on GitHub Pages</h4>
+        <p>1. Click <strong>Download All Photos</strong> above<br>
+           2. Extract the ZIP → you'll get a <code>photos/</code> folder<br>
+           3. Upload the <code>photos/</code> folder to your GitHub repo<br>
+           4. In your listings, reference photos as <code>photos/filename.jpg</code><br>
+           5. Export your inventory from the Export tab and update <code>inventory.js</code></p>
+        <button class="btn btn-b" onclick="downloadAllPhotos()">⬇️ Download Photos ZIP</button>
       </div>
     </div>
   </div>
 
-  <!-- ── SETTINGS ── -->
-  <div class="panel" id="panel-settings">
-    <div class="form-card">
+  <!-- SITE CONTENT EDITOR -->
+  <div class="panel" id="p-content">
+    <div class="card" style="max-width:820px">
+      <h3>✏️ Site Content Editor</h3>
+      <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px">Edit homepage text, trust bar, testimonials, and FAQ. Click Save to store, then re-export inventory.js.</p>
+
+      <!-- Hero -->
+      <div class="se-item" id="sec-hero">
+        <div class="se-hd" onclick="toggleSec('hero')">
+          <h4>🏠 Hero Section</h4><span class="arrow">▼</span>
+        </div>
+        <div class="se-body">
+          <div class="fg"><label>Hero Headline Line 1</label><input id="c-h1" placeholder="Affordable Tiny Homes"/></div>
+          <div class="fg"><label>Hero Headline Line 2 (accent)</label><input id="c-h2" placeholder="You Can Own Today"/></div>
+          <div class="fg"><label>Hero Subtitle</label><textarea id="c-hsub" style="min-height:60px"></textarea></div>
+          <div class="fg"><label>Badge Text</label><input id="c-hbadge" placeholder="✦ Seller Financing Available"/></div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <div class="fg" style="flex:1"><label>Primary Button Text</label><input id="c-btn1" placeholder="Browse Homes"/></div>
+            <div class="fg" style="flex:1"><label>Primary Button Link</label><input id="c-btn1l" placeholder="models.html"/></div>
+          </div>
+          <div class="fg-row">
+            <div class="fg"><label>Stat 1 Number</label><input id="c-s1n" placeholder="500+"/></div>
+            <div class="fg"><label>Stat 1 Label</label><input id="c-s1l" placeholder="Homes Delivered"/></div>
+            <div class="fg"><label>Stat 2 Number</label><input id="c-s2n" placeholder="$0–$5K"/></div>
+            <div class="fg"><label>Stat 2 Label</label><input id="c-s2l" placeholder="Down Payment Options"/></div>
+            <div class="fg"><label>Stat 3 Number</label><input id="c-s3n" placeholder="48"/></div>
+            <div class="fg"><label>Stat 3 Label</label><input id="c-s3l" placeholder="States We Deliver To"/></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Bar -->
+      <div class="se-item" id="sec-trust">
+        <div class="se-hd" onclick="toggleSec('trust')">
+          <h4>✅ Trust Bar</h4><span class="arrow">▼</span>
+        </div>
+        <div class="se-body">
+          <p style="color:var(--muted);font-size:.82rem;margin-bottom:12px">5 trust items shown across the bar below the hero.</p>
+          <div id="trust-items"></div>
+          <button class="btn btn-gh btn-sm" style="margin-top:8px" onclick="addTrustItem()">+ Add Item</button>
+        </div>
+      </div>
+
+      <!-- Testimonials -->
+      <div class="se-item" id="sec-testi">
+        <div class="se-hd" onclick="toggleSec('testi')">
+          <h4>⭐ Testimonials</h4><span class="arrow">▼</span>
+        </div>
+        <div class="se-body">
+          <div id="testi-items"></div>
+          <button class="btn btn-gh btn-sm" style="margin-top:8px" onclick="addTesti()">+ Add Testimonial</button>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="se-item" id="sec-faq">
+        <div class="se-hd" onclick="toggleSec('faq')">
+          <h4>❓ FAQ</h4><span class="arrow">▼</span>
+        </div>
+        <div class="se-body">
+          <div id="faq-items"></div>
+          <button class="btn btn-gh btn-sm" style="margin-top:8px" onclick="addFaq()">+ Add FAQ</button>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn btn-g" onclick="saveContent()">💾 Save All Content</button>
+        <button class="btn btn-p btn-sm" onclick="go('export')">📤 Then Export →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="panel" id="p-export">
+    <div class="card" style="max-width:820px">
+      <h3>📤 Export inventory.js</h3>
+      <p style="color:var(--muted);font-size:.88rem;margin-bottom:18px">This file contains all your homes, settings, and content. Copy it and replace your <code>inventory.js</code> file in GitHub.</p>
+      <div class="sec-hd" style="margin-bottom:10px">
+        <span style="font-size:.88rem;color:var(--muted)">Generated inventory.js</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-b btn-sm" onclick="downloadExport()">⬇️ Download File</button>
+          <button class="btn btn-p btn-sm" onclick="copyExport()">📋 Copy Code</button>
+        </div>
+      </div>
+      <div class="codebox" id="exportBox"></div>
+      <div class="info-box" style="margin-top:16px">
+        <strong>🚀 Deploy Steps:</strong><br>
+        1. Click <strong>Download File</strong> → save as <code>inventory.js</code><br>
+        2. Replace the existing <code>inventory.js</code> in your GitHub repo<br>
+        3. Also upload your <code>photos/</code> folder if you uploaded photos here<br>
+        4. Commit & push → your site updates live within seconds ✅
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="panel" id="p-settings">
+    <div class="card" style="max-width:680px">
       <h3>⚙️ Site Settings</h3>
-      <div class="form-grid" style="margin-bottom:24px;">
-        <div class="form-group">
-          <label>Business Name</label>
-          <input id="s-name" type="text" value="Corcoran Lifestyle Properties" />
-        </div>
-        <div class="form-group">
-          <label>WhatsApp Number</label>
-          <input id="s-wa" type="text" value="+12515010068" />
-        </div>
-        <div class="form-group full">
-          <label>Tagline / Hero Subtitle</label>
-          <input id="s-tagline" type="text" value="Low down payments · Easy seller financing · Rent-to-own options · Nationwide delivery" />
-        </div>
-        <div class="form-group">
-          <label>Admin Username</label>
-          <input id="s-user" type="text" value="admin" />
-        </div>
-        <div class="form-group">
-          <label>New Password (leave blank to keep)</label>
-          <input id="s-pass" type="password" placeholder="New password…" />
-        </div>
+      <div class="fg-row">
+        <div class="fg"><label>Business Name</label><input id="s-name" value="Corcoran Lifestyle Properties"/></div>
+        <div class="fg"><label>WhatsApp Number</label><input id="s-wa" value="+12515010068"/></div>
+        <div class="fg fg-full"><label>Tagline / Meta Description</label><input id="s-tag" value="Low down payments · Easy seller financing · Rent-to-own · Nationwide delivery"/></div>
+        <div class="fg"><label>Business Hours</label><input id="s-hrs" value="Mon–Sat: 8am – 7pm CST"/></div>
+        <div class="fg"><label>States Served</label><input id="s-states" value="48"/></div>
+        <div class="fg"><label>Admin Username</label><input id="s-user" value="admin"/></div>
+        <div class="fg"><label>New Password (leave blank to keep)</label><input id="s-pass" type="password" placeholder="New password…"/></div>
       </div>
-      <div class="form-footer">
-        <button class="btn btn-success" onclick="saveSettings()">✅ Save Settings</button>
-        <button class="btn btn-danger btn-sm" onclick="confirmClearAll()">🗑 Clear All Data</button>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button class="btn btn-g" onclick="saveSettings()">✅ Save Settings</button>
+        <button class="btn btn-d btn-sm" onclick="confirmClear()">🗑 Clear All Data</button>
       </div>
     </div>
   </div>
@@ -636,518 +502,625 @@
 
 <!-- MODAL -->
 
-<div class="modal-overlay" id="modalOverlay">
+<div class="overlay" id="ov">
   <div class="modal">
-    <h3 id="modalTitle">Confirm Delete</h3>
-    <p id="modalMsg">Are you sure you want to delete this home? This cannot be undone.</p>
+    <h3 id="mt">Confirm</h3>
+    <p id="mp">Are you sure?</p>
     <div class="modal-btns">
-      <button class="btn btn-danger" id="modalConfirmBtn">Delete</button>
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-d" id="mok">Confirm</button>
+      <button class="btn btn-gh" onclick="closeModal()">Cancel</button>
     </div>
   </div>
 </div>
 
-<!-- TOASTS -->
-
-<div class="toast-container" id="toastContainer"></div>
+<div class="toasts" id="toasts"></div>
 
 <script>
-// ══════════════════════════════════════════════
-//  STORAGE HELPERS (localStorage for GitHub Pages)
-// ══════════════════════════════════════════════
-const KEYS = {
-  homes:    'clp_homes',
-  settings: 'clp_settings',
-  auth:     'clp_auth',
-  session:  'clp_session'
-};
+/* =========================================
+   STORAGE
+   ========================================= */
+const K = { homes:'clp_homes', settings:'clp_settings', auth:'clp_auth', session:'clp_session', content:'clp_content', photos:'clp_photos' };
+const load = k => { try { return JSON.parse(localStorage.getItem(k)) || null } catch { return null } };
+const save = (k,v) => { try { localStorage.setItem(k,JSON.stringify(v)); return true } catch(e) { toast('Storage error: '+e.message,'err'); return false } };
 
-function loadData(key) {
-  try { return JSON.parse(localStorage.getItem(key)) || null; }
-  catch(e) { return null; }
+/* =========================================
+   AUTH
+   ========================================= */
+function getAuth(){ return load(K.auth) || { user:'admin', pass:'corcoran2025' } }
+function login(){
+  const u=document.getElementById('lu').value.trim(), p=document.getElementById('lp').value.trim();
+  const a=getAuth();
+  if(u===a.user && p===a.pass){ save(K.session,{on:true}); boot(); }
+  else { document.getElementById('lerr').style.display='block'; }
+}
+function logout(){ save(K.session,null); location.reload(); }
+function boot(){
+  document.getElementById('loginWrap').style.display='none';
+  document.getElementById('app').classList.add('on');
+  initApp();
+}
+function checkSession(){ if(load(K.session)?.on) boot(); }
+
+/* =========================================
+   INIT
+   ========================================= */
+function initApp(){
+  loadSettings(); loadContent();
+  go('dashboard');
+  genExport();
 }
 
-function saveData(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); return true; }
-  catch(e) { showToast('Storage error: ' + e.message, 'error'); return false; }
-}
-
-// ══════════════════════════════════════════════
-//  AUTH
-// ══════════════════════════════════════════════
-function getAuth() {
-  return loadData(KEYS.auth) || { user: 'admin', pass: 'corcoran2025' };
-}
-
-function doLogin() {
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value.trim();
-  const auth = getAuth();
-  if (u === auth.user && p === auth.pass) {
-    saveData(KEYS.session, { loggedIn: true, at: Date.now() });
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').classList.add('visible');
-    initApp();
-  } else {
-    document.getElementById('loginError').style.display = 'block';
-  }
-}
-
-function doLogout() {
-  saveData(KEYS.session, null);
-  location.reload();
-}
-
-function checkSession() {
-  const s = loadData(KEYS.session);
-  if (s && s.loggedIn) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').classList.add('visible');
-    initApp();
-  }
-}
-
-// ══════════════════════════════════════════════
-//  HOMES DATA
-// ══════════════════════════════════════════════
-function getHomes() { return loadData(KEYS.homes) || []; }
-
-function saveHomes(homes) { return saveData(KEYS.homes, homes); }
-
-function getSettings() {
-  return loadData(KEYS.settings) || {
-    name: 'Corcoran Lifestyle Properties',
-    wa: '+12515010068',
-    tagline: 'Low down payments · Easy seller financing · Rent-to-own · Nationwide delivery'
-  };
-}
-
-// ══════════════════════════════════════════════
-//  APP INIT
-// ══════════════════════════════════════════════
-function initApp() {
-  loadSettings();
-  showPanel('dashboard');
-  renderDashboard();
-  generateExport();
-}
-
-// ══════════════════════════════════════════════
-//  PANELS
-// ══════════════════════════════════════════════
-const panelTitles = {
-  dashboard: 'Dashboard',
-  homes:     'All Homes',
-  add:       'Add New Home',
-  export:    'Export / Embed',
-  settings:  'Settings'
-};
-
-function showPanel(id) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.textContent.toLowerCase().includes(panelTitles[id].split(' ')[0].toLowerCase()))
-      n.classList.add('active');
+/* =========================================
+   PANEL ROUTING
+   ========================================= */
+const PNL = { dashboard:'Dashboard', homes:'All Homes', add:'Add Home', photos:'Photo Library', content:'Site Content', export:'Export', settings:'Settings' };
+function go(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-i').forEach(n=>n.classList.remove('on'));
+  const el = document.getElementById('p-'+id); if(el) el.classList.add('on');
+  // highlight nav
+  document.querySelectorAll('.nav-i').forEach(n=>{
+    if(n.textContent.trim().toLowerCase().includes((PNL[id]||'').split(' ')[0].toLowerCase()))
+      n.classList.add('on');
   });
-  document.getElementById('topbarTitle').textContent = panelTitles[id] || id;
+  document.getElementById('ttl').textContent = PNL[id]||id;
 
-  if (id === 'homes')     renderHomes();
-  if (id === 'dashboard') renderDashboard();
-  if (id === 'export')    generateExport();
-  if (id === 'add' && !document.getElementById('editId').value) resetForm();
+  if(id==='dashboard') renderDash();
+  if(id==='homes')     renderHomes();
+  if(id==='export')    genExport();
+  if(id==='photos')    renderPhotoLib();
+  if(id==='content')   renderContent();
+  if(id==='add' && !document.getElementById('eid').value) resetForm();
 }
 
-// ══════════════════════════════════════════════
-//  DASHBOARD
-// ══════════════════════════════════════════════
-function renderDashboard() {
-  const homes = getHomes();
-  const active = homes.filter(h => h.active !== false);
-  const featured = homes.filter(h => h.featured);
-  const newHomes = homes.filter(h => h.condition === 'New');
-
-  document.getElementById('topbarStat').textContent = `${homes.length} Total Listings`;
-
-  document.getElementById('statsRow').innerHTML = `
-    <div class="stat-card"><div class="s-icon">🏠</div><div class="s-val">${homes.length}</div><div class="s-label">Total Homes</div></div>
-    <div class="stat-card"><div class="s-icon">✅</div><div class="s-val">${active.length}</div><div class="s-label">Active Listings</div></div>
-    <div class="stat-card"><div class="s-icon">⭐</div><div class="s-val">${featured.length}</div><div class="s-label">Featured</div></div>
-    <div class="stat-card"><div class="s-icon">✨</div><div class="s-val">${newHomes.length}</div><div class="s-label">New Homes</div></div>
-  `;
-
-  const recent = [...homes].reverse().slice(0, 3);
-  document.getElementById('recentHomes').innerHTML = recent.length
-    ? renderHomeRows(recent)
-    : `<div class="empty-state"><div class="empty-icon">🏡</div><h3>No homes yet</h3><p>Add your first listing to get started.</p><button class="btn btn-primary" onclick="showPanel('add')">Add First Home</button></div>`;
+/* =========================================
+   DASHBOARD
+   ========================================= */
+function renderDash(){
+  const h=getHomes(), act=h.filter(x=>x.active!==false), ft=h.filter(x=>x.featured), nw=h.filter(x=>x.condition==='New');
+  document.getElementById('tpill').textContent = h.length+' Listings';
+  document.getElementById('statsRow').innerHTML=`
+    <div class="sc"><div class="si">🏠</div><div class="sv">${h.length}</div><div class="sl">Total Homes</div></div>
+    <div class="sc"><div class="si">✅</div><div class="sv">${act.length}</div><div class="sl">Active</div></div>
+    <div class="sc"><div class="si">⭐</div><div class="sv">${ft.length}</div><div class="sl">Featured</div></div>
+    <div class="sc"><div class="si">✨</div><div class="sv">${nw.length}</div><div class="sl">New Homes</div></div>
+    <div class="sc"><div class="si">🖼️</div><div class="sv">${getAllPhotos().length}</div><div class="sl">Photos Stored</div></div>`;
+  const rec=[...h].reverse().slice(0,3);
+  document.getElementById('recentList').innerHTML = rec.length ? rowsHTML(rec) :
+    `<div class="empty"><div class="ei">🏡</div><h3>No homes yet</h3><p>Add your first listing to get started.</p><button class="btn btn-p" onclick="go('add')">Add First Home</button></div>`;
 }
 
-// ══════════════════════════════════════════════
-//  HOME LIST
-// ══════════════════════════════════════════════
-function renderHomes() {
-  const filter = document.getElementById('filterType')?.value || '';
-  let homes = getHomes();
-  if (filter) homes = homes.filter(h => h.type === filter);
-  document.getElementById('homeCount').textContent = homes.length;
-  document.getElementById('homesList').innerHTML = homes.length
-    ? renderHomeRows(homes)
-    : `<div class="empty-state"><div class="empty-icon">🏡</div><h3>No listings found</h3><p>Try a different filter or add a new home.</p></div>`;
+/* =========================================
+   HOMES
+   ========================================= */
+function getHomes(){ return load(K.homes)||[] }
+function saveHomes(h){ return save(K.homes,h) }
+
+function renderHomes(){
+  const f=document.getElementById('typeFilter')?.value||'';
+  let h=getHomes(); if(f) h=h.filter(x=>x.type===f);
+  document.getElementById('hcount').textContent=h.length;
+  document.getElementById('homesList').innerHTML = h.length ? rowsHTML(h) :
+    `<div class="empty"><div class="ei">🏡</div><h3>No listings found</h3><p>Try a different filter or add a new home.</p></div>`;
 }
 
-function renderHomeRows(homes) {
-  return homes.map(h => {
-    const thumb = h.photos && h.photos[0]
-      ? `<img src="${h.photos[0]}" alt="${h.name}" onerror="this.parentElement.innerHTML='<div class=no-img>🏡</div>'" />`
-      : `<div class="no-img">🏡</div>`;
-    const statusColor = h.active === false ? '#aaa' : '#27AE60';
-    return `
-    <div class="home-row" id="row-${h.id}">
-      <div class="home-thumb">${thumb}</div>
-      <div class="home-info">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div class="home-name">${h.name || 'Unnamed Home'}</div>
-          <span style="width:8px;height:8px;border-radius:50%;background:${statusColor};display:inline-block;"></span>
+function rowsHTML(homes){
+  return homes.map(h=>{
+    const thumb = h.photos&&h.photos[0]
+      ? `<img src="${h.photos[0]}" alt="${h.name}" onerror="this.parentElement.innerHTML='<div class=nimg>🏡</div>'"/>`
+      : `<div class="nimg">🏡</div>`;
+    const dot = h.active===false ? '#ccc' : '#27AE60';
+    return `<div class="hrow">
+      <div class="hthumb">${thumb}</div>
+      <div class="hinfo">
+        <div style="display:flex;align-items:center;gap:7px">
+          <div class="hname">${h.name||'Unnamed'}</div>
+          <span style="width:8px;height:8px;border-radius:50%;background:${dot};display:inline-block"></span>
         </div>
-        <div class="home-meta">
-          ${h.type ? `<span class="home-tag">${h.type}</span>` : ''}
-          ${h.condition ? `<span class="home-tag ${h.condition === 'New' ? 'new-tag' : 'used-tag'}">${h.condition}</span>` : ''}
-          ${h.featured ? `<span class="home-tag featured-tag">⭐ Featured</span>` : ''}
-          ${h.sqft ? `<span class="home-tag">📐 ${h.sqft}</span>` : ''}
-          ${h.beds ? `<span class="home-tag">🛏 ${h.beds} bed</span>` : ''}
+        <div class="hmeta">
+          ${h.type?`<span class="htag">${h.type}</span>`:''}
+          ${h.condition?`<span class="htag ${h.condition==='New'?'nt':'ut'}">${h.condition}</span>`:''}
+          ${h.featured?`<span class="htag ft">⭐ Featured</span>`:''}
+          ${h.sqft?`<span class="htag">📐 ${h.sqft}</span>`:''}
         </div>
-        <div class="home-price">${h.price || '—'}</div>
-        ${h.monthly ? `<div class="home-monthly">~${h.monthly} · ${h.down || ''} down</div>` : ''}
+        <div class="hprice">${h.price||'—'}</div>
+        ${h.monthly?`<div class="hmon">~${h.monthly}${h.down?' · '+h.down+' down':''}</div>`:''}
       </div>
-      <div class="home-actions">
-        <button class="btn btn-ghost btn-sm" onclick="editHome('${h.id}')">✏️ Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="confirmDelete('${h.id}', '${h.name?.replace(/'/g,"\\'")}')">🗑 Delete</button>
+      <div class="hacts">
+        <button class="btn btn-gh btn-sm" onclick="editHome('${h.id}')">✏️ Edit</button>
+        <button class="btn btn-d btn-sm"  onclick="confirmDel('${h.id}','${(h.name||'').replace(/'/g,"\\'")}')">🗑 Del</button>
       </div>
     </div>`;
   }).join('');
 }
 
-// ══════════════════════════════════════════════
-//  FORM TABS
-// ══════════════════════════════════════════════
-function switchTab(tab) {
-  document.querySelectorAll('.form-tab').forEach((t, i) => t.classList.toggle('active', ['info','photos','details'][i] === tab));
-  document.querySelectorAll('.form-tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
+/* =========================================
+   FORM TABS
+   ========================================= */
+function tab(t){
+  const tabs=['info','photos','details'];
+  document.querySelectorAll('.ftab').forEach((b,i)=>b.classList.toggle('on',tabs[i]===t));
+  document.querySelectorAll('.ftp').forEach(p=>p.classList.remove('on'));
+  document.getElementById('t-'+t).classList.add('on');
 }
 
-// ══════════════════════════════════════════════
-//  PHOTOS — base64 encode uploaded files
-// ══════════════════════════════════════════════
-let currentPhotos = []; // array of base64 or URL strings
+/* =========================================
+   PHOTOS (base64 + library)
+   ========================================= */
+let curPhotos = [];
 
-function handlePhotoUpload(input) {
-  const files = Array.from(input.files);
-  const remaining = 5 - currentPhotos.length;
-  if (remaining <= 0) { showToast('Max 5 photos per listing', 'error'); return; }
-  const toProcess = files.slice(0, remaining);
+function getAllPhotos(){ return load(K.photos)||[] }
+function saveAllPhotos(arr){ save(K.photos,arr) }
 
-  toProcess.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      currentPhotos.push(e.target.result);
-      renderPhotoPreviews();
+function handleFiles(inp){
+  const files=Array.from(inp.files), rem=5-curPhotos.length;
+  if(rem<=0){ toast('Max 5 photos','err'); return; }
+  files.slice(0,rem).forEach(f=>{
+    if(f.size>4*1024*1024){ toast(`${f.name} is too large (max 4MB)`,'err'); return; }
+    const r=new FileReader();
+    r.onload=e=>{
+      const entry = { data: e.target.result, name: f.name, size: f.size };
+      curPhotos.push(entry.data);
+      // also save to library
+      const lib = getAllPhotos();
+      lib.push(entry);
+      saveAllPhotos(lib);
+      renderPrevs();
     };
-    reader.readAsDataURL(file);
+    r.readAsDataURL(f);
   });
-  input.value = '';
+  inp.value='';
 }
 
-function addPhotoUrl() {
-  const url = document.getElementById('photoUrlInput').value.trim();
-  if (!url) return;
-  if (currentPhotos.length >= 5) { showToast('Max 5 photos', 'error'); return; }
-  currentPhotos.push(url);
-  document.getElementById('photoUrlInput').value = '';
-  renderPhotoPreviews();
+function addUrl(){
+  const u=document.getElementById('urlIn').value.trim(); if(!u) return;
+  if(curPhotos.length>=5){ toast('Max 5 photos','err'); return; }
+  curPhotos.push(u);
+  document.getElementById('urlIn').value='';
+  renderPrevs();
 }
 
-function removePhoto(idx) {
-  currentPhotos.splice(idx, 1);
-  renderPhotoPreviews();
+function removePhoto(i){ curPhotos.splice(i,1); renderPrevs(); }
+
+function renderPrevs(){
+  document.getElementById('prevs').innerHTML = curPhotos.map((src,i)=>`
+    <div class="prev">
+      <img src="${src}" alt="Photo ${i+1}"/>
+      <button class="del" onclick="removePhoto(${i})">✕</button>
+      ${i===0?'<div class="main-badge">Main</div>':''}
+    </div>`).join('');
 }
 
-function renderPhotoPreviews() {
-  const el = document.getElementById('photoPreviews');
-  el.innerHTML = currentPhotos.map((src, i) => `
-    <div class="photo-preview">
-      <img src="${src}" alt="Photo ${i+1}" />
-      <button class="del-photo" onclick="removePhoto(${i})">✕</button>
-      ${i === 0 ? '<div class="primary-badge">Main</div>' : ''}
+/* Photo Library Panel */
+function renderPhotoLib(){
+  const lib=getAllPhotos();
+  document.getElementById('photoCount').textContent=lib.length+' photos stored';
+  document.getElementById('photoLib').innerHTML = lib.length
+    ? lib.map((p,i)=>`
+      <div class="pm-item" title="${p.name||'Photo'}">
+        <img src="${p.data||p}" alt=""/>
+        <button class="pm-del" onclick="delLibPhoto(${i})">✕</button>
+        <div class="pm-name">${p.name||'photo'}</div>
+      </div>`).join('')
+    : '<p style="color:var(--muted);font-size:.85rem">No photos yet. Upload photos when adding homes.</p>';
+}
+
+function delLibPhoto(i){
+  const lib=getAllPhotos(); lib.splice(i,1); saveAllPhotos(lib); renderPhotoLib(); toast('Photo removed');
+}
+
+function confirmClearPhotos(){
+  modal('Clear All Photos?','This removes all stored photos from the library. Listing photos will still display if they are URLs.',()=>{
+    saveAllPhotos([]); renderPhotoLib(); toast('Photos cleared','ok');
+  });
+}
+
+/* Download all photos as a ZIP (using JSZip CDN) */
+async function downloadAllPhotos(){
+  const lib = getAllPhotos();
+  if(!lib.length){ toast('No photos to download','err'); return; }
+  toast('Preparing ZIP…','info');
+
+  // Load JSZip dynamically
+  if(!window.JSZip){
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+      s.onload=res; s.onerror=rej;
+      document.head.appendChild(s);
+    }).catch(()=>{ toast('Could not load ZIP library. Download photos individually.','err'); return null; });
+  }
+  if(!window.JSZip) return;
+
+  const zip = new JSZip();
+  const folder = zip.folder('photos');
+  lib.forEach((p,i)=>{
+    const src = p.data || p;
+    const name = p.name || `photo-${i+1}.jpg`;
+    if(src.startsWith('data:')){
+      const b64 = src.split(',')[1];
+      const mime = src.split(';')[0].split(':')[1];
+      folder.file(name, b64, {base64:true});
+    } else {
+      // URL photo — add a text file with the URL
+      folder.file(name+'.url.txt', src);
+    }
+  });
+
+  zip.generateAsync({type:'blob'}).then(blob=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='corcoran-photos.zip';
+    a.click();
+    toast('✅ Photos downloaded!','ok');
+  });
+}
+
+/* =========================================
+   SAVE / EDIT / DELETE HOME
+   ========================================= */
+function saveHome(){
+  const name=document.getElementById('f-name').value.trim();
+  const type=document.getElementById('f-type').value;
+  if(!name){ toast('Enter a home name','err'); tab('info'); return; }
+  if(!type){ toast('Select a home type','err'); tab('info'); return; }
+
+  const homes=getHomes(), eid=document.getElementById('eid').value, isEdit=!!eid;
+  const home={
+    id:         isEdit ? eid : 'h'+Date.now(),
+    name,type,
+    condition:  document.getElementById('f-cond').value,
+    price:      document.getElementById('f-price').value.trim(),
+    down:       document.getElementById('f-down').value.trim(),
+    monthly:    document.getElementById('f-mo').value.trim(),
+    sqft:       document.getElementById('f-sqft').value.trim(),
+    beds:       document.getElementById('f-beds').value.trim(),
+    baths:      document.getElementById('f-baths').value.trim(),
+    badge:      document.getElementById('f-badge').value.trim(),
+    desc:       document.getElementById('f-desc').value.trim(),
+    featured:   document.getElementById('f-feat').checked,
+    active:     document.getElementById('f-active').checked,
+    financing:  document.getElementById('f-fin').checked,
+    waMsg:      document.getElementById('f-wa').value.trim(),
+    order:      parseInt(document.getElementById('f-ord').value)||10,
+    photos:     [...curPhotos],
+    updatedAt:  Date.now()
+  };
+  if(!isEdit) home.createdAt=Date.now();
+
+  if(isEdit){ const i=homes.findIndex(h=>h.id===eid); if(i>-1) homes[i]=home; else homes.push(home); }
+  else homes.push(home);
+
+  if(saveHomes(homes)){ toast(isEdit?'Home updated ✅':'Home added ✅','ok'); resetForm(); genExport(); go('homes'); }
+}
+
+function editHome(id){
+  const h=getHomes().find(x=>x.id===id); if(!h) return;
+  go('add');
+  document.getElementById('formTitle').textContent='✏️ Edit Home';
+  document.getElementById('eid').value=h.id;
+  ['name','type','price','down','sqft','beds','baths','badge','desc','wa'].forEach(k=>{
+    const el=document.getElementById('f-'+k); if(el) el.value=h[k==='type'?'type':k==='wa'?'waMsg':k]||'';
+  });
+  document.getElementById('f-cond').value=h.condition||'New';
+  document.getElementById('f-mo').value=h.monthly||'';
+  document.getElementById('f-feat').checked=!!h.featured;
+  document.getElementById('f-active').checked=h.active!==false;
+  document.getElementById('f-fin').checked=h.financing!==false;
+  document.getElementById('f-ord').value=h.order||10;
+  // fix waMsg
+  document.getElementById('f-wa').value=h.waMsg||'';
+  curPhotos=h.photos?[...h.photos]:[];
+  renderPrevs(); tab('info');
+}
+
+function confirmDel(id,name){
+  modal(`Delete "${name}"?`,'This listing will be permanently removed.',()=>{ delHome(id); });
+}
+function delHome(id){
+  saveHomes(getHomes().filter(h=>h.id!==id));
+  genExport(); renderHomes(); renderDash(); toast('Deleted','ok');
+}
+
+function resetForm(){
+  document.getElementById('formTitle').textContent='➕ Add New Home';
+  document.getElementById('eid').value='';
+  ['f-name','f-price','f-down','f-mo','f-sqft','f-beds','f-baths','f-badge','f-desc','f-wa'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=''; });
+  document.getElementById('f-type').value='';
+  document.getElementById('f-cond').value='New';
+  document.getElementById('f-ord').value='10';
+  document.getElementById('f-feat').checked=true;
+  document.getElementById('f-active').checked=true;
+  document.getElementById('f-fin').checked=true;
+  curPhotos=[]; renderPrevs(); tab('info');
+}
+
+/* =========================================
+   CONTENT EDITOR
+   ========================================= */
+function getContent(){
+  return load(K.content) || {
+    h1:'Affordable Tiny Homes', h2:'You Can Own Today',
+    hsub:'Low down payments · Easy seller financing · Rent-to-own options · Nationwide delivery — Your dream home is closer than you think.',
+    hbadge:'✦ Seller Financing Available', btn1:'Browse Homes', btn1l:'models.html',
+    s1n:'500+',s1l:'Homes Delivered', s2n:'$0–$5K',s2l:'Down Payment Options', s3n:'48',s3l:'States We Deliver To',
+    trust:[
+      {icon:'🏆',text:'Trusted Seller Since 2015'},{icon:'🚚',text:'Nationwide Delivery & Setup'},
+      {icon:'💰',text:'No Bank Needed – We Finance'},{icon:'🔧',text:'Full Warranty Included'},{icon:'⭐',text:'5-Star Customer Service'}
+    ],
+    testimonials:[
+      {stars:5,text:"I never thought I could own a home with my credit situation. Corcoran worked with me, got me a great monthly payment, and my Hacienda was delivered in 3 weeks. Life-changing!",name:"Maria R.",loc:"First-Time Homeowner, Texas"},
+      {stars:5,text:"Bought two homes from Corcoran for rental income. The seller financing made it possible to invest without a big bank loan. Already cash-flowing!",name:"Derek J.",loc:"Real Estate Investor, Florida"},
+      {stars:5,text:"The rent-to-own program was perfect for our family. We put down $2,000 and moved into our Summit model the same month.",name:"Sarah L.",loc:"Family of 4, Alabama"}
+    ],
+    faq:[
+      {q:'Do I need good credit to qualify?',a:"No! We welcome all credit situations — good, fair, or rebuilding. We look at your full financial picture."},
+      {q:'How much do I need for a down payment?',a:'Down payments typically start at $1,500 to $5,000 depending on the model and purchase price.'},
+      {q:'Do you deliver nationwide?',a:'Yes! We deliver to 48 states. Our team handles delivery, placement, and setup.'},
+      {q:"What's the difference between new and used homes?",a:'New homes come with full manufacturer warranties. Used homes offer great value at lower price points — all inspected and reconditioned.'},
+      {q:'Do the homes come with a warranty?',a:'Yes. New homes include manufacturer warranties. We also provide our Corcoran quality guarantee on every home.'}
+    ]
+  };
+}
+
+function loadContent(){
+  const c=getContent();
+  ['h1','h2','hsub','hbadge','btn1','btn1l','s1n','s1l','s2n','s2l','s3n','s3l'].forEach(k=>{
+    const el=document.getElementById('c-'+k); if(el) el.value=c[k]||'';
+  });
+}
+
+function renderContent(){
+  loadContent();
+  const c=getContent();
+  // Trust
+  const ti=document.getElementById('trust-items');
+  ti.innerHTML=''; (c.trust||[]).forEach((t,i)=>{
+    const d=document.createElement('div'); d.style.cssText='display:flex;gap:8px;margin-bottom:8px;align-items:center';
+    d.innerHTML=`<input value="${t.icon}" style="width:50px;padding:8px;border:2px solid var(--border);border-radius:var(--r);font-size:.95rem;text-align:center" id="ti-icon-${i}"/>
+    <input value="${t.text}" style="flex:1;padding:8px 12px;border:2px solid var(--border);border-radius:var(--r);font:inherit" id="ti-text-${i}"/>
+    <button class="btn btn-d btn-sm" onclick="this.parentElement.remove()">✕</button>`;
+    ti.appendChild(d);
+  });
+  // Testimonials
+  const tsti=document.getElementById('testi-items');
+  tsti.innerHTML=''; (c.testimonials||[]).forEach((t,i)=>{
+    const d=document.createElement('div'); d.style.cssText='background:var(--warm);border-radius:var(--r);padding:14px;margin-bottom:10px';
+    d.innerHTML=`<div class="fg-row" style="margin-bottom:8px">
+      <div class="fg"><label style="font-size:.7rem;font-weight:700;text-transform:uppercase;color:var(--muted)">Name</label><input value="${t.name}" id="tt-name-${i}" style="padding:8px;border:2px solid var(--border);border-radius:var(--r);font:inherit;width:100%"/></div>
+      <div class="fg"><label style="font-size:.7rem;font-weight:700;text-transform:uppercase;color:var(--muted)">Location</label><input value="${t.loc}" id="tt-loc-${i}" style="padding:8px;border:2px solid var(--border);border-radius:var(--r);font:inherit;width:100%"/></div>
     </div>
-  `).join('');
+    <textarea id="tt-txt-${i}" style="width:100%;padding:8px;border:2px solid var(--border);border-radius:var(--r);font:inherit;min-height:70px;resize:vertical">${t.text}</textarea>
+
+```
+<button class="btn btn-d btn-sm" style="margin-top:6px" onclick="this.closest('[style]').remove()">Remove</button>`;
+tsti.appendChild(d);
+```
+
+});
+// FAQ
+const fi=document.getElementById(‘faq-items’);
+fi.innerHTML=’’; (c.faq||[]).forEach((f,i)=>{
+const d=document.createElement(‘div’); d.style.cssText=‘background:var(–warm);border-radius:var(–r);padding:14px;margin-bottom:10px’;
+d.innerHTML=`<input value="${f.q}" id="fq-q-${i}" placeholder="Question" style="width:100%;padding:9px;border:2px solid var(--border);border-radius:var(--r);font:inherit;margin-bottom:8px"/> <textarea id="fq-a-${i}" placeholder="Answer" style="width:100%;padding:9px;border:2px solid var(--border);border-radius:var(--r);font:inherit;min-height:60px;resize:vertical">${f.a}</textarea> <button class="btn btn-d btn-sm" style="margin-top:6px" onclick="this.closest('[style]').remove()">Remove</button>`;
+fi.appendChild(d);
+});
 }
 
-// ══════════════════════════════════════════════
-//  SAVE / EDIT / DELETE
-// ══════════════════════════════════════════════
-function saveHome() {
-  const name = document.getElementById('f-name').value.trim();
-  const type = document.getElementById('f-type').value;
-  if (!name) { showToast('Please enter a home name', 'error'); switchTab('info'); return; }
-  if (!type) { showToast('Please select a home type', 'error'); switchTab('info'); return; }
-
-  const homes = getHomes();
-  const editId = document.getElementById('editId').value;
-  const isEdit = !!editId;
-
-  const home = {
-    id:        isEdit ? editId : 'h_' + Date.now(),
-    name,
-    type,
-    condition: document.getElementById('f-condition').value,
-    price:     document.getElementById('f-price').value.trim(),
-    down:      document.getElementById('f-down').value.trim(),
-    monthly:   document.getElementById('f-monthly').value.trim(),
-    sqft:      document.getElementById('f-sqft').value.trim(),
-    beds:      document.getElementById('f-beds').value.trim(),
-    baths:     document.getElementById('f-baths').value.trim(),
-    badge:     document.getElementById('f-badge').value.trim(),
-    desc:      document.getElementById('f-desc').value.trim(),
-    featured:  document.getElementById('f-featured').checked,
-    active:    document.getElementById('f-active').checked,
-    financing: document.getElementById('f-financing').checked,
-    waMsg:     document.getElementById('f-waMsg').value.trim(),
-    order:     parseInt(document.getElementById('f-order').value) || 10,
-    photos:    [...currentPhotos],
-    updatedAt: Date.now()
-  };
-
-  if (isEdit) {
-    const idx = homes.findIndex(h => h.id === editId);
-    if (idx > -1) homes[idx] = home; else homes.push(home);
-  } else {
-    home.createdAt = Date.now();
-    homes.push(home);
-  }
-
-  if (saveHomes(homes)) {
-    showToast(isEdit ? '✅ Home updated!' : '✅ Home added!', 'success');
-    resetForm();
-    generateExport();
-    showPanel('homes');
-  }
+function toggleSec(id){
+const el=document.getElementById(‘sec-’+id);
+el.classList.toggle(‘open’);
 }
 
-function editHome(id) {
-  const homes = getHomes();
-  const h = homes.find(h => h.id === id);
-  if (!h) return;
-
-  showPanel('add');
-  document.getElementById('formTitle').textContent = '✏️ Edit Home';
-  document.getElementById('editId').value = h.id;
-  document.getElementById('f-name').value      = h.name || '';
-  document.getElementById('f-type').value      = h.type || '';
-  document.getElementById('f-condition').value = h.condition || 'New';
-  document.getElementById('f-price').value     = h.price || '';
-  document.getElementById('f-down').value      = h.down || '';
-  document.getElementById('f-monthly').value   = h.monthly || '';
-  document.getElementById('f-sqft').value      = h.sqft || '';
-  document.getElementById('f-beds').value      = h.beds || '';
-  document.getElementById('f-baths').value     = h.baths || '';
-  document.getElementById('f-badge').value     = h.badge || '';
-  document.getElementById('f-desc').value      = h.desc || '';
-  document.getElementById('f-featured').checked = !!h.featured;
-  document.getElementById('f-active').checked   = h.active !== false;
-  document.getElementById('f-financing').checked = h.financing !== false;
-  document.getElementById('f-waMsg').value      = h.waMsg || '';
-  document.getElementById('f-order').value      = h.order || 10;
-  currentPhotos = h.photos ? [...h.photos] : [];
-  renderPhotoPreviews();
-  switchTab('info');
+function addTrustItem(){
+const d=document.createElement(‘div’); const i=document.querySelectorAll(’[id^=ti-icon]’).length;
+d.style.cssText=‘display:flex;gap:8px;margin-bottom:8px;align-items:center’;
+d.innerHTML=`<input value="✅" style="width:50px;padding:8px;border:2px solid var(--border);border-radius:var(--r);font-size:.95rem;text-align:center" id="ti-icon-${i}"/> <input value="New Trust Item" style="flex:1;padding:8px 12px;border:2px solid var(--border);border-radius:var(--r);font:inherit" id="ti-text-${i}"/> <button class="btn btn-d btn-sm" onclick="this.parentElement.remove()">✕</button>`;
+document.getElementById(‘trust-items’).appendChild(d);
 }
 
-function confirmDelete(id, name) {
-  document.getElementById('modalTitle').textContent = 'Delete "' + name + '"?';
-  document.getElementById('modalMsg').textContent = 'This listing will be permanently removed. Are you sure?';
-  document.getElementById('modalConfirmBtn').onclick = () => { deleteHome(id); closeModal(); };
-  document.getElementById('modalOverlay').classList.add('open');
+function addTesti(){
+const d=document.createElement(‘div’); const i=document.querySelectorAll(’[id^=tt-name]’).length;
+d.style.cssText=‘background:var(–warm);border-radius:var(–r);padding:14px;margin-bottom:10px’;
+d.innerHTML=`<div class="fg-row" style="margin-bottom:8px">
+<div class="fg"><input value="New Customer" id="tt-name-${i}" placeholder="Name" style="padding:8px;border:2px solid var(--border);border-radius:var(--r);font:inherit;width:100%"/></div>
+<div class="fg"><input value="Location, State" id="tt-loc-${i}" placeholder="Location" style="padding:8px;border:2px solid var(--border);border-radius:var(--r);font:inherit;width:100%"/></div>
+
+  </div>
+  <textarea id="tt-txt-${i}" placeholder="Testimonial text…" style="width:100%;padding:8px;border:2px solid var(--border);border-radius:var(--r);font:inherit;min-height:70px;resize:vertical"></textarea>
+  <button class="btn btn-d btn-sm" style="margin-top:6px" onclick="this.closest('[style]').remove()">Remove</button>`;
+  document.getElementById('testi-items').appendChild(d);
 }
 
-function deleteHome(id) {
-  const homes = getHomes().filter(h => h.id !== id);
-  saveHomes(homes);
-  generateExport();
-  renderHomes();
-  renderDashboard();
-  showToast('🗑 Home deleted', 'success');
+function addFaq(){
+const d=document.createElement(‘div’); const i=document.querySelectorAll(’[id^=fq-q]’).length;
+d.style.cssText=‘background:var(–warm);border-radius:var(–r);padding:14px;margin-bottom:10px’;
+d.innerHTML=`<input id="fq-q-${i}" placeholder="Question" style="width:100%;padding:9px;border:2px solid var(--border);border-radius:var(--r);font:inherit;margin-bottom:8px"/> <textarea id="fq-a-${i}" placeholder="Answer" style="width:100%;padding:9px;border:2px solid var(--border);border-radius:var(--r);font:inherit;min-height:60px;resize:vertical"></textarea> <button class="btn btn-d btn-sm" style="margin-top:6px" onclick="this.closest('[style]').remove()">Remove</button>`;
+document.getElementById(‘faq-items’).appendChild(d);
 }
 
-function resetForm() {
-  document.getElementById('formTitle').textContent = '➕ Add New Home';
-  document.getElementById('editId').value = '';
-  ['f-name','f-price','f-down','f-monthly','f-sqft','f-beds','f-baths','f-badge','f-desc','f-waMsg'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  document.getElementById('f-type').value = '';
-  document.getElementById('f-condition').value = 'New';
-  document.getElementById('f-order').value = '10';
-  document.getElementById('f-featured').checked = true;
-  document.getElementById('f-active').checked = true;
-  document.getElementById('f-financing').checked = true;
-  currentPhotos = [];
-  renderPhotoPreviews();
-  switchTab('info');
+function saveContent(){
+const c = getContent();
+[‘h1’,‘h2’,‘hsub’,‘hbadge’,‘btn1’,‘btn1l’,‘s1n’,‘s1l’,‘s2n’,‘s2l’,‘s3n’,‘s3l’].forEach(k=>{
+const el=document.getElementById(‘c-’+k); if(el) c[k]=el.value;
+});
+// Trust
+const trust=[]; document.querySelectorAll(’[id^=ti-icon-]’).forEach(el=>{
+const i=el.id.split(’-’)[2], txt=document.getElementById(‘ti-text-’+i);
+if(txt) trust.push({icon:el.value, text:txt.value});
+});
+c.trust=trust;
+// Testimonials
+const testi=[]; document.querySelectorAll(’[id^=tt-name-]’).forEach(el=>{
+const i=el.id.split(’-’)[2], loc=document.getElementById(‘tt-loc-’+i), txt=document.getElementById(‘tt-txt-’+i);
+if(loc&&txt) testi.push({stars:5, name:el.value, loc:loc.value, text:txt.value});
+});
+c.testimonials=testi;
+// FAQ
+const faq=[]; document.querySelectorAll(’[id^=fq-q-]’).forEach(el=>{
+const i=el.id.split(’-’)[2], ans=document.getElementById(‘fq-a-’+i);
+if(ans&&el.value) faq.push({q:el.value, a:ans.value});
+});
+c.faq=faq;
+
+if(save(K.content,c)){ toast(‘Content saved ✅’,‘ok’); genExport(); }
 }
 
-// ══════════════════════════════════════════════
-//  SETTINGS
-// ══════════════════════════════════════════════
-function loadSettings() {
-  const s = getSettings();
-  document.getElementById('s-name').value    = s.name || '';
-  document.getElementById('s-wa').value      = s.wa || '';
-  document.getElementById('s-tagline').value = s.tagline || '';
-  const auth = getAuth();
-  document.getElementById('s-user').value    = auth.user || 'admin';
+/* =========================================
+SETTINGS
+========================================= */
+function loadSettings(){
+const s=load(K.settings)||{};
+const a=getAuth();
+[‘name’,‘wa’,‘tag’,‘hrs’,‘states’].forEach(k=>{
+const el=document.getElementById(‘s-’+k);
+if(el) el.value=s[k]||el.value||’’;
+});
+const su=document.getElementById(‘s-user’); if(su) su.value=a.user||‘admin’;
+}
+function saveSettings(){
+const s={name:document.getElementById(‘s-name’).value.trim(), wa:document.getElementById(‘s-wa’).value.trim(),
+tag:document.getElementById(‘s-tag’).value.trim(), hrs:document.getElementById(‘s-hrs’).value.trim(),
+states:document.getElementById(‘s-states’).value.trim()};
+save(K.settings,s);
+const nu=document.getElementById(‘s-user’).value.trim(), np=document.getElementById(‘s-pass’).value.trim(), a=getAuth();
+save(K.auth,{user:nu||a.user, pass:np||a.pass});
+toast(‘Settings saved ✅’,‘ok’); genExport();
+}
+function confirmClear(){
+modal(‘Clear ALL Data?’,‘This deletes every home, photo, and setting permanently.’,()=>{
+Object.values(K).forEach(k=>localStorage.removeItem(k));
+toast(‘All data cleared’,‘ok’); location.reload();
+});
 }
 
-function saveSettings() {
-  const settings = {
-    name:    document.getElementById('s-name').value.trim(),
-    wa:      document.getElementById('s-wa').value.trim(),
-    tagline: document.getElementById('s-tagline').value.trim()
-  };
-  saveData(KEYS.settings, settings);
+/* =========================================
+EXPORT
+========================================= */
+function genExport(){
+const homes    = getHomes().filter(h=>h.active!==false);
+const settings = load(K.settings)||{ name:‘Corcoran Lifestyle Properties’, wa:’+12515010068’ };
+const content  = getContent();
 
-  const newUser = document.getElementById('s-user').value.trim();
-  const newPass = document.getElementById('s-pass').value.trim();
-  const auth = getAuth();
-  saveData(KEYS.auth, {
-    user: newUser || auth.user,
-    pass: newPass || auth.pass
-  });
-
-  showToast('✅ Settings saved!', 'success');
-  generateExport();
-}
-
-function confirmClearAll() {
-  document.getElementById('modalTitle').textContent = '⚠️ Clear All Data?';
-  document.getElementById('modalMsg').textContent = 'This will delete ALL homes and settings permanently. This cannot be undone.';
-  document.getElementById('modalConfirmBtn').onclick = () => {
-    [KEYS.homes, KEYS.settings].forEach(k => localStorage.removeItem(k));
-    showToast('All data cleared', 'success');
-    closeModal();
-    initApp();
-  };
-  document.getElementById('modalOverlay').classList.add('open');
-}
-
-// ══════════════════════════════════════════════
-//  EXPORT — generates inventory.js code
-// ══════════════════════════════════════════════
-function generateExport() {
-  const homes = getHomes();
-  const settings = getSettings();
-  const code = `// ============================================
-// Corcoran Lifestyle Properties — Inventory
-// Generated by Admin Panel · ${new Date().toLocaleDateString()}
-// Copy this file as: inventory.js
+const code=`// ============================================
+// Corcoran Lifestyle Properties — inventory.js
+// Generated: ${new Date().toLocaleString()}
 // ============================================
 
 window.CLP_SETTINGS = ${JSON.stringify(settings, null, 2)};
 
-window.CLP_HOMES = ${JSON.stringify(homes.filter(h => h.active !== false), null, 2)};
+window.CLP_CONTENT = ${JSON.stringify(content, null, 2)};
 
-// Auto-render if the #clp-homes-grid element exists on page
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    const grid = document.getElementById('clp-homes-grid');
-    if (!grid || !window.CLP_HOMES) return;
-    const waBase = 'https://wa.me/' + (window.CLP_SETTINGS.wa || '').replace(/[^0-9]/g,'');
-    const featured = window.CLP_HOMES.filter(h => h.featured !== false);
-    grid.innerHTML = featured.sort((a,b) => (a.order||10)-(b.order||10)).map(h => {
-      const img = h.photos && h.photos[0]
-        ? \`background:linear-gradient(to bottom,rgba(0,0,0,0.1),rgba(0,0,0,0.45)),url('\${h.photos[0]}') center/cover no-repeat\`
-        : 'background:linear-gradient(135deg,#3D5A40,#8B9D5C)';
-      const wa = waBase + '?text=' + encodeURIComponent(h.waMsg || 'Hi! I am interested in ' + h.name + '. Can you tell me more?');
-      return \`<div class="model-card visible">
-  <div class="model-img" style="\${img}">
-    \${h.badge ? \`<div class="model-badge">\${h.badge}</div>\` : '<div></div>'}
-    <div class="model-tag">\${h.type || ''}</div>
-  </div>
-  <div class="model-body">
-    <h3 class="model-name">\${h.name}</h3>
-    <div class="model-specs">
-      \${h.sqft ? \`<span>📐 \${h.sqft}</span>\` : ''}
-      \${h.beds ? \`<span>🛏 \${h.beds} Bed</span>\` : ''}
-      \${h.baths ? \`<span>🚿 \${h.baths}</span>\` : ''}
-    </div>
-    <div class="model-price-row">
-      <div>
-        <div class="model-price">\${h.price || ''}</div>
-        \${h.monthly ? \`<div class="model-finance">As low as <strong>\${h.monthly}</strong></div>\` : ''}
-      </div>
-      \${h.down ? \`<div class="model-down">\${h.down} Down</div>\` : ''}
-    </div>
-    <a href="\${wa}" target="_blank" class="btn btn-wa w-full">💬 Inquire on WhatsApp</a>
-  </div>
-</div>\`;
-    }).join('');
-  });
+window.CLP_HOMES = ${JSON.stringify(homes, null, 2)};
+
+// Auto-render featured homes into #clp-homes-grid
+(function(){
+document.addEventListener(‘DOMContentLoaded’, function(){
+var grid = document.getElementById(‘clp-homes-grid’);
+var homes = window.CLP_HOMES;
+var s = window.CLP_SETTINGS || {};
+if(!grid || !homes || !homes.length) return;
+var waNum = (s.wa||‘12515010068’).replace(/\D/g,’’);
+var waBase = ‘https://wa.me/’ + waNum;
+var grads = [
+‘linear-gradient(135deg,#8B6914,#D4A853)’,
+‘linear-gradient(135deg,#3D5A40,#8B9D5C)’,
+‘linear-gradient(135deg,#6B4C3B,#C4956A)’,
+‘linear-gradient(135deg,#B85C38,#D4A853)’,
+‘linear-gradient(135deg,#2C4230,#5C7A44)’
+];
+var featured = homes.filter(function(h){ return h.active!==false && h.featured!==false; })
+.sort(function(a,b){ return (a.order||10)-(b.order||10); });
+if(!featured.length) return;
+var WA = ‘<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>’;
+grid.innerHTML = featured.map(function(h,idx){
+var bg = h.photos&&h.photos[0]
+? ‘linear-gradient(to bottom,rgba(0,0,0,0.05),rgba(0,0,0,0.5)),url(\’’ + h.photos[0] + ‘\’) center/cover no-repeat’
+: grads[idx % grads.length];
+var wa = waBase + ‘?text=’ + encodeURIComponent(h.waMsg||‘Hi! I am interested in ‘+h.name+’. Can you tell me more?’);
+return ‘<div class="model-card visible" style="transition-delay:'+idx*0.07+'s">’
++’<div class="model-img" style="'+bg+'">’
++(h.badge?’<div class="model-badge">’+h.badge+’</div>’:’<div></div>’)
++’<div class="model-tag">’+(h.type||’’)+’</div></div>’
++’<div class="model-body">’
++’<h3 class="model-name">’+(h.name||‘Home’)+’</h3>’
++’<div class="model-specs">’
++(h.sqft?’<span>📌 ‘+h.sqft+’</span>’:’’)
++(h.beds?’<span>🛌 ‘+h.beds+’ Bed</span>’:’’)
++(h.baths?’<span>🚿 ‘+h.baths+’</span>’:’’)+’</div>’
++’<div class="model-price-row"><div>’
++’<div class="model-price">’+(h.price||’’)+’</div>’
++(h.monthly?’<div class="model-finance">As low as <strong>’+h.monthly+’</strong></div>’:’’)
++’</div>’
++(h.down?’<div class="model-down">’+h.down+’ Down</div>’:’’)+’</div>’
++’<a href="'+wa+'" target="_blank" class="btn btn-wa w-full">’+WA+’ Inquire on WhatsApp</a>’
++’</div></div>’;
+}).join(’’)
++ ‘<div class="model-card cta-card visible">’
++ ‘<div class="cta-card-inner"><div class="cta-icon">🏠</div>’
++ ‘<h3>Don't See What You Need?</h3>’
++ ‘<p>We have more inventory. Message us and we'll find your perfect home.</p>’
++ ‘<a href=”’+waBase+’?text=’+encodeURIComponent(“Hi! I’d like to see more home options.”)+’” target=”_blank” class=“btn btn-wa”>Chat on WhatsApp</a>’
++ ‘</div></div>’;
+});
 })();`;
 
-  const el = document.getElementById('exportCode');
-  if (el) el.textContent = code;
+const el=document.getElementById(‘exportBox’); if(el) el.textContent=code;
+window._exportCode=code;
 }
 
-function copyExport() {
-  const code = document.getElementById('exportCode').textContent;
-  navigator.clipboard.writeText(code).then(() => {
-    showToast('📋 Code copied to clipboard!', 'success');
-  }).catch(() => {
-    showToast('Select the code box and copy manually', 'error');
-  });
+function copyExport(){
+if(!window._exportCode){ toast(‘Generate export first’,‘err’); return; }
+navigator.clipboard.writeText(window._exportCode)
+.then(()=>toast(‘Copied to clipboard! ✅’,‘ok’))
+.catch(()=>toast(‘Copy the code box manually’,‘err’));
 }
 
-// ══════════════════════════════════════════════
-//  MODAL
-// ══════════════════════════════════════════════
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
+function downloadExport(){
+if(!window._exportCode){ genExport(); }
+const blob=new Blob([window._exportCode],{type:‘text/javascript’});
+const a=document.createElement(‘a’);
+a.href=URL.createObjectURL(blob); a.download=‘inventory.js’; a.click();
+toast(‘inventory.js downloaded ✅’,‘ok’);
 }
-document.getElementById('modalOverlay').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeModal();
+
+/* =========================================
+MODAL + TOASTS
+========================================= */
+function modal(title,msg,cb){
+document.getElementById(‘mt’).textContent=title;
+document.getElementById(‘mp’).textContent=msg;
+document.getElementById(‘mok’).onclick=()=>{ cb(); closeModal(); };
+document.getElementById(‘ov’).classList.add(‘on’);
+}
+function closeModal(){ document.getElementById(‘ov’).classList.remove(‘on’); }
+document.getElementById(‘ov’).addEventListener(‘click’,e=>{ if(e.target===e.currentTarget) closeModal(); });
+
+function toast(msg,type=’’){
+const t=document.createElement(‘div’);
+t.className=‘toast ‘+(type||’’);
+t.textContent=msg;
+document.getElementById(‘toasts’).appendChild(t);
+setTimeout(()=>t.remove(),3200);
+}
+
+/* =========================================
+DRAG & DROP
+========================================= */
+const ua=document.getElementById(‘uploadArea’);
+if(ua){
+ua.addEventListener(‘dragover’,e=>{e.preventDefault();ua.classList.add(‘dv’)});
+ua.addEventListener(‘dragleave’,()=>ua.classList.remove(‘dv’));
+ua.addEventListener(‘drop’,e=>{
+e.preventDefault(); ua.classList.remove(‘dv’);
+const fake={files:Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith(‘image/’))};
+handleFiles(fake);
 });
-
-// ══════════════════════════════════════════════
-//  TOASTS
-// ══════════════════════════════════════════════
-function showToast(msg, type = '') {
-  const t = document.createElement('div');
-  t.className = 'toast ' + type;
-  t.textContent = msg;
-  document.getElementById('toastContainer').appendChild(t);
-  setTimeout(() => t.remove(), 3500);
 }
 
-// ══════════════════════════════════════════════
-//  DRAG & DROP
-// ══════════════════════════════════════════════
-const uploadArea = document.getElementById('uploadArea');
-if (uploadArea) {
-  uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
-  uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
-  uploadArea.addEventListener('drop', e => {
-    e.preventDefault();
-    uploadArea.classList.remove('dragover');
-    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
-    const fakeInput = { files };
-    handlePhotoUpload(fakeInput);
-  });
-}
-
-// ══════════════════════════════════════════════
-//  BOOT
-// ══════════════════════════════════════════════
+/* =========================================
+BOOT
+========================================= */
 checkSession();
 </script>
 
