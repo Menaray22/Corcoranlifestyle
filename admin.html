@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel – Corcoran Lifestyle Properties</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+    body { font-family: 'DM Sans', sans-serif; background: #F0EDE8; color: #2A2520; min-height: 100vh; }
+
+```
+/* ── VARIABLES ── */
+:root {
+  --rust:    #B85C38;
+  --rust-dk: #9A4C2E;
+  --forest:  #3D5A40;
+  --forest-dk:#2C4230;
+  --gold:    #D4A853;
+  --sand:    #E8D9C0;
+  --cream:   #FAF6EF;
+  --warm:    #F5EFE3;
+  --charcoal:#2A2A2A;
+  --muted:   #7A6E64;
+  --white:   #FFFFFF;
+  --border:  #DDD4C5;
+  --danger:  #C0392B;
+  --success: #27AE60;
+  --shadow:  0 2px 12px rgba(60,40,20,0.10);
+  --shadow-lg:0 8px 32px rgba(60,40,20,0.15);
+  --radius:  10px;
+}
+
+/* ── LOGIN SCREEN ── */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2C4230 0%, #3D5A40 50%, #5C7A44 100%);
+  padding: 24px;
+}
+.login-box {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+.login-logo { font-size: 2.5rem; margin-bottom: 8px; }
+.login-box h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 6px; }
+.login-box p { color: var(--muted); font-size: 0.88rem; margin-bottom: 32px; }
+.login-box input {
+  width: 100%; padding: 13px 16px; border: 2px solid var(--border);
+  border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem; margin-bottom: 14px; outline: none; transition: border 0.2s;
+}
+.login-box input:focus { border-color: var(--forest); }
+.login-box .btn-login {
+  width: 100%; padding: 14px; background: var(--forest); color: var(--white);
+  border: none; border-radius: var(--radius); font-size: 1rem; font-weight: 600;
+  cursor: pointer; transition: background 0.2s;
+}
+.login-box .btn-login:hover { background: var(--forest-dk); }
+.login-error { color: var(--danger); font-size: 0.85rem; margin-top: 10px; display: none; }
+
+/* ── LAYOUT ── */
+.app { display: none; min-height: 100vh; }
+.app.visible { display: flex; }
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--charcoal);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-logo .logo-icon { font-size: 1.5rem; }
+.sidebar-logo .logo-main { font-family: 'Playfair Display', serif; font-size: 1rem; color: #fff; display: block; margin-top: 4px; }
+.sidebar-logo .logo-sub { font-size: 0.65rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
+.sidebar-logo .admin-badge { display: inline-block; background: var(--rust); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+
+.sidebar-nav { padding: 16px 0; flex: 1; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 24px; color: rgba(255,255,255,0.55);
+  font-size: 0.88rem; font-weight: 500; cursor: pointer;
+  transition: all 0.2s; border-left: 3px solid transparent;
+}
+.nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.nav-item.active { color: #fff; background: rgba(255,255,255,0.08); border-left-color: var(--rust); }
+.nav-item .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+
+.sidebar-footer {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-footer a {
+  display: block; color: rgba(255,255,255,0.4); font-size: 0.8rem;
+  text-decoration: none; margin-bottom: 8px; transition: color 0.2s;
+}
+.sidebar-footer a:hover { color: rgba(255,255,255,0.8); }
+.btn-logout {
+  width: 100%; padding: 10px; background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius); font-size: 0.85rem; cursor: pointer;
+  transition: all 0.2s; margin-top: 8px;
+}
+.btn-logout:hover { background: rgba(200,80,56,0.2); color: #ff8a75; border-color: rgba(200,80,56,0.3); }
+
+/* Main content */
+.main { flex: 1; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+.topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+.topbar h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.topbar-stat { background: var(--warm); padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; color: var(--forest); }
+
+.content { padding: 32px; flex: 1; }
+
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── STATS ROW ── */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.stat-card {
+  background: var(--white); border-radius: var(--radius); padding: 24px 20px;
+  box-shadow: var(--shadow);
+}
+.stat-card .s-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.stat-card .s-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--charcoal); }
+.stat-card .s-label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── SECTION HEADER ── */
+.sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.sec-header h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+.btn-primary { background: var(--rust); color: #fff; }
+.btn-primary:hover { background: var(--rust-dk); transform: translateY(-1px); }
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { background: #219150; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #a93226; }
+.btn-ghost { background: var(--warm); color: var(--charcoal); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--sand); }
+.btn-sm { padding: 7px 14px; font-size: 0.8rem; }
+
+/* ── HOMES LIST ── */
+.homes-list { display: flex; flex-direction: column; gap: 14px; }
+.home-row {
+  background: var(--white); border-radius: var(--radius); padding: 0;
+  box-shadow: var(--shadow); display: flex; align-items: stretch; overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.home-row:hover { box-shadow: var(--shadow-lg); }
+.home-thumb {
+  width: 120px; flex-shrink: 0;
+  background: var(--sand);
+  position: relative; overflow: hidden;
+}
+.home-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.home-thumb .no-img {
+  width: 100%; height: 100%; display: flex; align-items: center;
+  justify-content: center; font-size: 2.5rem; color: var(--muted);
+  background: var(--warm);
+}
+.home-info { flex: 1; padding: 16px 20px; display: flex; flex-direction: column; justify-content: center; }
+.home-info .home-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 4px; }
+.home-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.home-tag { background: var(--warm); color: var(--muted); font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+.home-tag.new-tag { background: rgba(61,90,64,0.12); color: var(--forest); }
+.home-tag.used-tag { background: rgba(212,168,83,0.15); color: #8B6914; }
+.home-tag.featured-tag { background: rgba(184,92,56,0.12); color: var(--rust); }
+.home-price { font-weight: 700; color: var(--charcoal); font-size: 0.95rem; margin-top: 6px; }
+.home-monthly { font-size: 0.8rem; color: var(--muted); }
+.home-actions { padding: 16px; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+
+/* ── FORM ── */
+.form-card {
+  background: var(--white); border-radius: var(--radius); padding: 32px;
+  box-shadow: var(--shadow); max-width: 820px;
+}
+.form-card h3 { font-family: 'Playfair Display', serif; margin-bottom: 24px; font-size: 1.2rem; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { font-size: 0.8rem; font-weight: 600; color: var(--charcoal); text-transform: uppercase; letter-spacing: 0.06em; }
+.form-group input, .form-group select, .form-group textarea {
+  padding: 11px 14px; border: 2px solid var(--border); border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--charcoal);
+  background: var(--cream); outline: none; transition: border 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--forest); background: #fff; }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-group .hint { font-size: 0.75rem; color: var(--muted); }
+
+/* Toggle */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.toggle-row:last-child { border-bottom: none; }
+.toggle-row label { font-size: 0.9rem; font-weight: 500; }
+.toggle-row .toggle-desc { font-size: 0.78rem; color: var(--muted); }
+.toggle {
+  position: relative; width: 44px; height: 24px; flex-shrink: 0;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0; background: var(--border);
+  border-radius: 24px; cursor: pointer; transition: background 0.2s;
+}
+.toggle-slider::before {
+  content: ''; position: absolute; width: 18px; height: 18px;
+  background: #fff; border-radius: 50%; left: 3px; top: 3px;
+  transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle input:checked + .toggle-slider { background: var(--forest); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+/* Photo upload */
+.photo-upload-area {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 32px; text-align: center; cursor: pointer;
+  transition: all 0.2s; background: var(--cream); position: relative;
+}
+.photo-upload-area:hover, .photo-upload-area.dragover { border-color: var(--forest); background: rgba(61,90,64,0.04); }
+.photo-upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.upload-text { font-size: 0.9rem; color: var(--muted); }
+.upload-text strong { color: var(--forest); }
+.upload-text small { display: block; margin-top: 4px; font-size: 0.75rem; }
+
+.photo-previews { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.photo-preview {
+  width: 100px; height: 80px; border-radius: 8px; overflow: hidden;
+  position: relative; box-shadow: var(--shadow);
+}
+.photo-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-preview .del-photo {
+  position: absolute; top: 4px; right: 4px;
+  background: rgba(0,0,0,0.6); color: #fff; border: none;
+  width: 20px; height: 20px; border-radius: 50%; font-size: 0.7rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.photo-preview .primary-badge {
+  position: absolute; bottom: 4px; left: 4px;
+  background: var(--gold); color: #fff; font-size: 0.55rem; font-weight: 700;
+  padding: 2px 5px; border-radius: 4px; text-transform: uppercase;
+}
+
+/* Form footer */
+.form-footer { display: flex; gap: 12px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
+
+/* ── TOAST ── */
+.toast-container { position: fixed; bottom: 28px; right: 28px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+.toast {
+  background: var(--charcoal); color: #fff; padding: 14px 20px;
+  border-radius: var(--radius); font-size: 0.88rem; font-weight: 500;
+  box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 10px;
+  animation: slideIn 0.3s ease; max-width: 320px;
+}
+.toast.success { background: var(--success); }
+.toast.error { background: var(--danger); }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  display: none; align-items: center; justify-content: center;
+  z-index: 200; padding: 24px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white); border-radius: 16px; padding: 36px;
+  max-width: 460px; width: 100%; box-shadow: var(--shadow-lg); text-align: center;
+}
+.modal h3 { font-family: 'Playfair Display', serif; margin-bottom: 12px; }
+.modal p { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+.modal-btns { display: flex; gap: 12px; justify-content: center; }
+
+/* ── EMPTY STATE ── */
+.empty-state { text-align: center; padding: 60px 32px; color: var(--muted); }
+.empty-state .empty-icon { font-size: 4rem; margin-bottom: 16px; }
+.empty-state h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--charcoal); margin-bottom: 10px; }
+.empty-state p { font-size: 0.9rem; max-width: 360px; margin: 0 auto 24px; line-height: 1.65; }
+
+/* ── TABS (in add/edit form) ── */
+.form-tabs { display: flex; gap: 4px; margin-bottom: 24px; background: var(--warm); border-radius: var(--radius); padding: 4px; }
+.form-tab { flex: 1; padding: 9px; text-align: center; border-radius: 8px; cursor: pointer; font-size: 0.84rem; font-weight: 600; color: var(--muted); transition: all 0.2s; border: none; background: none; }
+.form-tab.active { background: var(--white); color: var(--charcoal); box-shadow: var(--shadow); }
+
+.form-tab-panel { display: none; }
+.form-tab-panel.active { display: block; }
+
+/* ── CODE EXPORT ── */
+.code-box {
+  background: #1E1E1E; color: #D4D4D4; border-radius: var(--radius);
+  padding: 20px; font-family: 'Courier New', monospace; font-size: 0.78rem;
+  line-height: 1.6; max-height: 360px; overflow-y: auto; white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .form-grid { grid-template-columns: 1fr; }
+  .content { padding: 20px 16px; }
+  .topbar { padding: 14px 16px; }
+  .home-thumb { width: 80px; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     LOGIN SCREEN
+════════════════════════════════ -->
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">🏡</div>
+    <h1>Admin Panel</h1>
+    <p>Corcoran Lifestyle Properties</p>
+    <input type="text" id="loginUser" placeholder="Username" autocomplete="username" />
+    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')doLogin()" />
+    <button class="btn-login" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect username or password.</div>
+    <p style="margin-top:20px;font-size:0.75rem;color:#aaa;">Default: admin / corcoran2025</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MAIN APP
+════════════════════════════════ -->
+
+<div class="app" id="app">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">🏡</span>
+      <span class="logo-main">Corcoran</span>
+      <span class="logo-sub">Lifestyle Properties</span>
+      <span class="admin-badge">Admin</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" onclick="showPanel('dashboard')">
+        <span class="nav-icon">📊</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="showPanel('homes')">
+        <span class="nav-icon">🏠</span> All Homes
+      </div>
+      <div class="nav-item" onclick="showPanel('add')">
+        <span class="nav-icon">➕</span> Add New Home
+      </div>
+      <div class="nav-item" onclick="showPanel('export')">
+        <span class="nav-icon">📤</span> Export / Embed
+      </div>
+      <div class="nav-item" onclick="showPanel('settings')">
+        <span class="nav-icon">⚙️</span> Settings
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="index.html" target="_blank">🌐 View Public Site</a>
+      <a href="models.html" target="_blank">🏡 View Models Page</a>
+      <button class="btn-logout" onclick="doLogout()">🚪 Log Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+
+  <div class="main">
+    <div class="topbar">
+      <h2 id="topbarTitle">Dashboard</h2>
+      <div class="topbar-right">
+        <span class="topbar-stat" id="topbarStat">Loading…</span>
+        <button class="btn btn-primary btn-sm" onclick="showPanel('add')">+ Add Home</button>
+      </div>
+    </div>
+
+```
+<div class="content">
+
+  <!-- ── DASHBOARD ── -->
+  <div class="panel active" id="panel-dashboard">
+    <div class="stats-row" id="statsRow"></div>
+    <div class="sec-header">
+      <h3>Recent Listings</h3>
+      <button class="btn btn-ghost btn-sm" onclick="showPanel('homes')">View All →</button>
+    </div>
+    <div id="recentHomes"></div>
+  </div>
+
+  <!-- ── ALL HOMES ── -->
+  <div class="panel" id="panel-homes">
+    <div class="sec-header">
+      <h3>All Homes (<span id="homeCount">0</span>)</h3>
+      <div style="display:flex;gap:10px;">
+        <select id="filterType" onchange="renderHomes()" style="padding:8px 12px;border:2px solid var(--border);border-radius:var(--radius);font-size:0.85rem;background:var(--white);">
+          <option value="">All Types</option>
+          <option value="Park Model RV">Park Model RV</option>
+          <option value="Tiny Home">Tiny Home</option>
+          <option value="Mobile Home">Mobile Home</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="showPanel('add')">+ Add Home</button>
+      </div>
+    </div>
+    <div class="homes-list" id="homesList"></div>
+  </div>
+
+  <!-- ── ADD / EDIT HOME ── -->
+  <div class="panel" id="panel-add">
+    <div class="form-card">
+      <h3 id="formTitle">➕ Add New Home</h3>
+      <input type="hidden" id="editId" value="" />
+
+      <div class="form-tabs">
+        <button class="form-tab active" onclick="switchTab('info')">📋 Info & Pricing</button>
+        <button class="form-tab" onclick="switchTab('photos')">📷 Photos</button>
+        <button class="form-tab" onclick="switchTab('details')">🔧 Details & Settings</button>
+      </div>
+
+      <!-- TAB: Info -->
+      <div class="form-tab-panel active" id="tab-info">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Home Name / Model *</label>
+            <input id="f-name" type="text" placeholder="e.g. The Hacienda" />
+          </div>
+          <div class="form-group">
+            <label>Home Type *</label>
+            <select id="f-type">
+              <option value="">Select type…</option>
+              <option>Park Model RV</option>
+              <option>Tiny Home</option>
+              <option>Mobile Home</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Condition</label>
+            <select id="f-condition">
+              <option value="New">New</option>
+              <option value="Used">Used</option>
+              <option value="New & Used">New & Used</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price (e.g. $42,900)</label>
+            <input id="f-price" type="text" placeholder="From $42,900" />
+          </div>
+          <div class="form-group">
+            <label>Down Payment (e.g. $1,500)</label>
+            <input id="f-down" type="text" placeholder="$1,500" />
+          </div>
+          <div class="form-group">
+            <label>Monthly Payment (e.g. $399/mo)</label>
+            <input id="f-monthly" type="text" placeholder="$399/mo" />
+          </div>
+          <div class="form-group">
+            <label>Square Footage</label>
+            <input id="f-sqft" type="text" placeholder="400 sq ft" />
+          </div>
+          <div class="form-group">
+            <label>Bedrooms</label>
+            <input id="f-beds" type="text" placeholder="1–2" />
+          </div>
+          <div class="form-group">
+            <label>Bathrooms</label>
+            <input id="f-baths" type="text" placeholder="1 Full Bath" />
+          </div>
+          <div class="form-group">
+            <label>Badge Label (optional)</label>
+            <input id="f-badge" type="text" placeholder="🔥 Best Seller" />
+          </div>
+          <div class="form-group full">
+            <label>Description</label>
+            <textarea id="f-desc" placeholder="Write a short description of this home…"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Photos -->
+      <div class="form-tab-panel" id="tab-photos">
+        <div class="photo-upload-area" id="uploadArea">
+          <input type="file" id="photoInput" accept="image/*" multiple onchange="handlePhotoUpload(this)" />
+          <div class="upload-icon">📷</div>
+          <div class="upload-text">
+            <strong>Click to upload photos</strong> or drag & drop
+            <small>JPG, PNG, WEBP · Up to 5 photos · First photo = main listing image</small>
+          </div>
+        </div>
+        <div class="photo-previews" id="photoPreviews"></div>
+        <div style="margin-top:20px;">
+          <p style="font-size:0.85rem;color:var(--muted);">💡 <strong>Or use a photo URL</strong> (Unsplash, your own CDN, etc.)</p>
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <input type="text" id="photoUrlInput" placeholder="https://images.unsplash.com/…?w=800" style="flex:1;padding:10px 14px;border:2px solid var(--border);border-radius:var(--radius);font-size:0.88rem;outline:none;" />
+            <button class="btn btn-ghost" onclick="addPhotoUrl()">Add URL</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Details -->
+      <div class="form-tab-panel" id="tab-details">
+        <div class="toggle-row">
+          <div>
+            <label>Featured on Homepage</label>
+            <div class="toggle-desc">Show in the Featured Homes section</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="f-featured" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <label>Available / Active Listing</label>
+            <div class="toggle-desc">Hide this home from the public site if sold/reserved</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="f-active" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <label>Financing Available</label>
+            <div class="toggle-desc">Show seller financing badge on this listing</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="f-financing" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="form-group" style="margin-top:20px;">
+          <label>WhatsApp Pre-filled Message (for this home)</label>
+          <input id="f-waMsg" type="text" placeholder="Hi! I'm interested in The Hacienda. Can you tell me more?" />
+          <span class="hint">Customers clicking WhatsApp will see this pre-typed</span>
+        </div>
+        <div class="form-group" style="margin-top:16px;">
+          <label>Sort Order (lower = shows first)</label>
+          <input id="f-order" type="number" value="10" min="1" max="99" />
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <button class="btn btn-primary" onclick="saveHome()">💾 Save Home</button>
+        <button class="btn btn-ghost" onclick="resetForm()">✕ Clear Form</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXPORT ── -->
+  <div class="panel" id="panel-export">
+    <div class="form-card">
+      <h3>📤 Export Listings for Your Website</h3>
+      <p style="color:var(--muted);margin-bottom:20px;font-size:0.9rem;">Copy this JavaScript data block and paste it into your <code>inventory.js</code> file. Your website will read from it automatically.</p>
+      <div class="sec-header" style="margin-bottom:12px;">
+        <h3 style="font-size:1rem;">Generated inventory.js</h3>
+        <button class="btn btn-primary btn-sm" onclick="copyExport()">📋 Copy Code</button>
+      </div>
+      <div class="code-box" id="exportCode"></div>
+      <div style="margin-top:24px;padding:20px;background:var(--warm);border-radius:var(--radius);border-left:4px solid var(--forest);">
+        <strong style="font-size:0.9rem;">📝 How to use:</strong>
+        <ol style="margin-top:10px;padding-left:20px;font-size:0.85rem;color:var(--muted);line-height:1.9;">
+          <li>Click <strong>Copy Code</strong> above</li>
+          <li>Create a file called <code>inventory.js</code> in your website folder</li>
+          <li>Paste the code and save</li>
+          <li>Add <code>&lt;script src="inventory.js"&gt;&lt;/script&gt;</code> to your HTML pages</li>
+          <li>Your homes will now appear dynamically from this data</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SETTINGS ── -->
+  <div class="panel" id="panel-settings">
+    <div class="form-card">
+      <h3>⚙️ Site Settings</h3>
+      <div class="form-grid" style="margin-bottom:24px;">
+        <div class="form-group">
+          <label>Business Name</label>
+          <input id="s-name" type="text" value="Corcoran Lifestyle Properties" />
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input id="s-wa" type="text" value="+12515010068" />
+        </div>
+        <div class="form-group full">
+          <label>Tagline / Hero Subtitle</label>
+          <input id="s-tagline" type="text" value="Low down payments · Easy seller financing · Rent-to-own options · Nationwide delivery" />
+        </div>
+        <div class="form-group">
+          <label>Admin Username</label>
+          <input id="s-user" type="text" value="admin" />
+        </div>
+        <div class="form-group">
+          <label>New Password (leave blank to keep)</label>
+          <input id="s-pass" type="password" placeholder="New password…" />
+        </div>
+      </div>
+      <div class="form-footer">
+        <button class="btn btn-success" onclick="saveSettings()">✅ Save Settings</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmClearAll()">🗑 Clear All Data</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+```
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- MODAL -->
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">Confirm Delete</h3>
+    <p id="modalMsg">Are you sure you want to delete this home? This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="btn btn-danger" id="modalConfirmBtn">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  STORAGE HELPERS (localStorage for GitHub Pages)
+// ══════════════════════════════════════════════
+const KEYS = {
+  homes:    'clp_homes',
+  settings: 'clp_settings',
+  auth:     'clp_auth',
+  session:  'clp_session'
+};
+
+function loadData(key) {
+  try { return JSON.parse(localStorage.getItem(key)) || null; }
+  catch(e) { return null; }
+}
+
+function saveData(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+  catch(e) { showToast('Storage error: ' + e.message, 'error'); return false; }
+}
+
+// ══════════════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════════════
+function getAuth() {
+  return loadData(KEYS.auth) || { user: 'admin', pass: 'corcoran2025' };
+}
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value.trim();
+  const auth = getAuth();
+  if (u === auth.user && p === auth.pass) {
+    saveData(KEYS.session, { loggedIn: true, at: Date.now() });
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    initApp();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function doLogout() {
+  saveData(KEYS.session, null);
+  location.reload();
+}
+
+function checkSession() {
+  const s = loadData(KEYS.session);
+  if (s && s.loggedIn) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    initApp();
+  }
+}
+
+// ══════════════════════════════════════════════
+//  HOMES DATA
+// ══════════════════════════════════════════════
+function getHomes() { return loadData(KEYS.homes) || []; }
+
+function saveHomes(homes) { return saveData(KEYS.homes, homes); }
+
+function getSettings() {
+  return loadData(KEYS.settings) || {
+    name: 'Corcoran Lifestyle Properties',
+    wa: '+12515010068',
+    tagline: 'Low down payments · Easy seller financing · Rent-to-own · Nationwide delivery'
+  };
+}
+
+// ══════════════════════════════════════════════
+//  APP INIT
+// ══════════════════════════════════════════════
+function initApp() {
+  loadSettings();
+  showPanel('dashboard');
+  renderDashboard();
+  generateExport();
+}
+
+// ══════════════════════════════════════════════
+//  PANELS
+// ══════════════════════════════════════════════
+const panelTitles = {
+  dashboard: 'Dashboard',
+  homes:     'All Homes',
+  add:       'Add New Home',
+  export:    'Export / Embed',
+  settings:  'Settings'
+};
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.textContent.toLowerCase().includes(panelTitles[id].split(' ')[0].toLowerCase()))
+      n.classList.add('active');
+  });
+  document.getElementById('topbarTitle').textContent = panelTitles[id] || id;
+
+  if (id === 'homes')     renderHomes();
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'export')    generateExport();
+  if (id === 'add' && !document.getElementById('editId').value) resetForm();
+}
+
+// ══════════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════════
+function renderDashboard() {
+  const homes = getHomes();
+  const active = homes.filter(h => h.active !== false);
+  const featured = homes.filter(h => h.featured);
+  const newHomes = homes.filter(h => h.condition === 'New');
+
+  document.getElementById('topbarStat').textContent = `${homes.length} Total Listings`;
+
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="s-icon">🏠</div><div class="s-val">${homes.length}</div><div class="s-label">Total Homes</div></div>
+    <div class="stat-card"><div class="s-icon">✅</div><div class="s-val">${active.length}</div><div class="s-label">Active Listings</div></div>
+    <div class="stat-card"><div class="s-icon">⭐</div><div class="s-val">${featured.length}</div><div class="s-label">Featured</div></div>
+    <div class="stat-card"><div class="s-icon">✨</div><div class="s-val">${newHomes.length}</div><div class="s-label">New Homes</div></div>
+  `;
+
+  const recent = [...homes].reverse().slice(0, 3);
+  document.getElementById('recentHomes').innerHTML = recent.length
+    ? renderHomeRows(recent)
+    : `<div class="empty-state"><div class="empty-icon">🏡</div><h3>No homes yet</h3><p>Add your first listing to get started.</p><button class="btn btn-primary" onclick="showPanel('add')">Add First Home</button></div>`;
+}
+
+// ══════════════════════════════════════════════
+//  HOME LIST
+// ══════════════════════════════════════════════
+function renderHomes() {
+  const filter = document.getElementById('filterType')?.value || '';
+  let homes = getHomes();
+  if (filter) homes = homes.filter(h => h.type === filter);
+  document.getElementById('homeCount').textContent = homes.length;
+  document.getElementById('homesList').innerHTML = homes.length
+    ? renderHomeRows(homes)
+    : `<div class="empty-state"><div class="empty-icon">🏡</div><h3>No listings found</h3><p>Try a different filter or add a new home.</p></div>`;
+}
+
+function renderHomeRows(homes) {
+  return homes.map(h => {
+    const thumb = h.photos && h.photos[0]
+      ? `<img src="${h.photos[0]}" alt="${h.name}" onerror="this.parentElement.innerHTML='<div class=no-img>🏡</div>'" />`
+      : `<div class="no-img">🏡</div>`;
+    const statusColor = h.active === false ? '#aaa' : '#27AE60';
+    return `
+    <div class="home-row" id="row-${h.id}">
+      <div class="home-thumb">${thumb}</div>
+      <div class="home-info">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="home-name">${h.name || 'Unnamed Home'}</div>
+          <span style="width:8px;height:8px;border-radius:50%;background:${statusColor};display:inline-block;"></span>
+        </div>
+        <div class="home-meta">
+          ${h.type ? `<span class="home-tag">${h.type}</span>` : ''}
+          ${h.condition ? `<span class="home-tag ${h.condition === 'New' ? 'new-tag' : 'used-tag'}">${h.condition}</span>` : ''}
+          ${h.featured ? `<span class="home-tag featured-tag">⭐ Featured</span>` : ''}
+          ${h.sqft ? `<span class="home-tag">📐 ${h.sqft}</span>` : ''}
+          ${h.beds ? `<span class="home-tag">🛏 ${h.beds} bed</span>` : ''}
+        </div>
+        <div class="home-price">${h.price || '—'}</div>
+        ${h.monthly ? `<div class="home-monthly">~${h.monthly} · ${h.down || ''} down</div>` : ''}
+      </div>
+      <div class="home-actions">
+        <button class="btn btn-ghost btn-sm" onclick="editHome('${h.id}')">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmDelete('${h.id}', '${h.name?.replace(/'/g,"\\'")}')">🗑 Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+//  FORM TABS
+// ══════════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.form-tab').forEach((t, i) => t.classList.toggle('active', ['info','photos','details'][i] === tab));
+  document.querySelectorAll('.form-tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+//  PHOTOS — base64 encode uploaded files
+// ══════════════════════════════════════════════
+let currentPhotos = []; // array of base64 or URL strings
+
+function handlePhotoUpload(input) {
+  const files = Array.from(input.files);
+  const remaining = 5 - currentPhotos.length;
+  if (remaining <= 0) { showToast('Max 5 photos per listing', 'error'); return; }
+  const toProcess = files.slice(0, remaining);
+
+  toProcess.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      currentPhotos.push(e.target.result);
+      renderPhotoPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+
+function addPhotoUrl() {
+  const url = document.getElementById('photoUrlInput').value.trim();
+  if (!url) return;
+  if (currentPhotos.length >= 5) { showToast('Max 5 photos', 'error'); return; }
+  currentPhotos.push(url);
+  document.getElementById('photoUrlInput').value = '';
+  renderPhotoPreviews();
+}
+
+function removePhoto(idx) {
+  currentPhotos.splice(idx, 1);
+  renderPhotoPreviews();
+}
+
+function renderPhotoPreviews() {
+  const el = document.getElementById('photoPreviews');
+  el.innerHTML = currentPhotos.map((src, i) => `
+    <div class="photo-preview">
+      <img src="${src}" alt="Photo ${i+1}" />
+      <button class="del-photo" onclick="removePhoto(${i})">✕</button>
+      ${i === 0 ? '<div class="primary-badge">Main</div>' : ''}
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════
+//  SAVE / EDIT / DELETE
+// ══════════════════════════════════════════════
+function saveHome() {
+  const name = document.getElementById('f-name').value.trim();
+  const type = document.getElementById('f-type').value;
+  if (!name) { showToast('Please enter a home name', 'error'); switchTab('info'); return; }
+  if (!type) { showToast('Please select a home type', 'error'); switchTab('info'); return; }
+
+  const homes = getHomes();
+  const editId = document.getElementById('editId').value;
+  const isEdit = !!editId;
+
+  const home = {
+    id:        isEdit ? editId : 'h_' + Date.now(),
+    name,
+    type,
+    condition: document.getElementById('f-condition').value,
+    price:     document.getElementById('f-price').value.trim(),
+    down:      document.getElementById('f-down').value.trim(),
+    monthly:   document.getElementById('f-monthly').value.trim(),
+    sqft:      document.getElementById('f-sqft').value.trim(),
+    beds:      document.getElementById('f-beds').value.trim(),
+    baths:     document.getElementById('f-baths').value.trim(),
+    badge:     document.getElementById('f-badge').value.trim(),
+    desc:      document.getElementById('f-desc').value.trim(),
+    featured:  document.getElementById('f-featured').checked,
+    active:    document.getElementById('f-active').checked,
+    financing: document.getElementById('f-financing').checked,
+    waMsg:     document.getElementById('f-waMsg').value.trim(),
+    order:     parseInt(document.getElementById('f-order').value) || 10,
+    photos:    [...currentPhotos],
+    updatedAt: Date.now()
+  };
+
+  if (isEdit) {
+    const idx = homes.findIndex(h => h.id === editId);
+    if (idx > -1) homes[idx] = home; else homes.push(home);
+  } else {
+    home.createdAt = Date.now();
+    homes.push(home);
+  }
+
+  if (saveHomes(homes)) {
+    showToast(isEdit ? '✅ Home updated!' : '✅ Home added!', 'success');
+    resetForm();
+    generateExport();
+    showPanel('homes');
+  }
+}
+
+function editHome(id) {
+  const homes = getHomes();
+  const h = homes.find(h => h.id === id);
+  if (!h) return;
+
+  showPanel('add');
+  document.getElementById('formTitle').textContent = '✏️ Edit Home';
+  document.getElementById('editId').value = h.id;
+  document.getElementById('f-name').value      = h.name || '';
+  document.getElementById('f-type').value      = h.type || '';
+  document.getElementById('f-condition').value = h.condition || 'New';
+  document.getElementById('f-price').value     = h.price || '';
+  document.getElementById('f-down').value      = h.down || '';
+  document.getElementById('f-monthly').value   = h.monthly || '';
+  document.getElementById('f-sqft').value      = h.sqft || '';
+  document.getElementById('f-beds').value      = h.beds || '';
+  document.getElementById('f-baths').value     = h.baths || '';
+  document.getElementById('f-badge').value     = h.badge || '';
+  document.getElementById('f-desc').value      = h.desc || '';
+  document.getElementById('f-featured').checked = !!h.featured;
+  document.getElementById('f-active').checked   = h.active !== false;
+  document.getElementById('f-financing').checked = h.financing !== false;
+  document.getElementById('f-waMsg').value      = h.waMsg || '';
+  document.getElementById('f-order').value      = h.order || 10;
+  currentPhotos = h.photos ? [...h.photos] : [];
+  renderPhotoPreviews();
+  switchTab('info');
+}
+
+function confirmDelete(id, name) {
+  document.getElementById('modalTitle').textContent = 'Delete "' + name + '"?';
+  document.getElementById('modalMsg').textContent = 'This listing will be permanently removed. Are you sure?';
+  document.getElementById('modalConfirmBtn').onclick = () => { deleteHome(id); closeModal(); };
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function deleteHome(id) {
+  const homes = getHomes().filter(h => h.id !== id);
+  saveHomes(homes);
+  generateExport();
+  renderHomes();
+  renderDashboard();
+  showToast('🗑 Home deleted', 'success');
+}
+
+function resetForm() {
+  document.getElementById('formTitle').textContent = '➕ Add New Home';
+  document.getElementById('editId').value = '';
+  ['f-name','f-price','f-down','f-monthly','f-sqft','f-beds','f-baths','f-badge','f-desc','f-waMsg'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-type').value = '';
+  document.getElementById('f-condition').value = 'New';
+  document.getElementById('f-order').value = '10';
+  document.getElementById('f-featured').checked = true;
+  document.getElementById('f-active').checked = true;
+  document.getElementById('f-financing').checked = true;
+  currentPhotos = [];
+  renderPhotoPreviews();
+  switchTab('info');
+}
+
+// ══════════════════════════════════════════════
+//  SETTINGS
+// ══════════════════════════════════════════════
+function loadSettings() {
+  const s = getSettings();
+  document.getElementById('s-name').value    = s.name || '';
+  document.getElementById('s-wa').value      = s.wa || '';
+  document.getElementById('s-tagline').value = s.tagline || '';
+  const auth = getAuth();
+  document.getElementById('s-user').value    = auth.user || 'admin';
+}
+
+function saveSettings() {
+  const settings = {
+    name:    document.getElementById('s-name').value.trim(),
+    wa:      document.getElementById('s-wa').value.trim(),
+    tagline: document.getElementById('s-tagline').value.trim()
+  };
+  saveData(KEYS.settings, settings);
+
+  const newUser = document.getElementById('s-user').value.trim();
+  const newPass = document.getElementById('s-pass').value.trim();
+  const auth = getAuth();
+  saveData(KEYS.auth, {
+    user: newUser || auth.user,
+    pass: newPass || auth.pass
+  });
+
+  showToast('✅ Settings saved!', 'success');
+  generateExport();
+}
+
+function confirmClearAll() {
+  document.getElementById('modalTitle').textContent = '⚠️ Clear All Data?';
+  document.getElementById('modalMsg').textContent = 'This will delete ALL homes and settings permanently. This cannot be undone.';
+  document.getElementById('modalConfirmBtn').onclick = () => {
+    [KEYS.homes, KEYS.settings].forEach(k => localStorage.removeItem(k));
+    showToast('All data cleared', 'success');
+    closeModal();
+    initApp();
+  };
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+// ══════════════════════════════════════════════
+//  EXPORT — generates inventory.js code
+// ══════════════════════════════════════════════
+function generateExport() {
+  const homes = getHomes();
+  const settings = getSettings();
+  const code = `// ============================================
+// Corcoran Lifestyle Properties — Inventory
+// Generated by Admin Panel · ${new Date().toLocaleDateString()}
+// Copy this file as: inventory.js
+// ============================================
+
+window.CLP_SETTINGS = ${JSON.stringify(settings, null, 2)};
+
+window.CLP_HOMES = ${JSON.stringify(homes.filter(h => h.active !== false), null, 2)};
+
+// Auto-render if the #clp-homes-grid element exists on page
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const grid = document.getElementById('clp-homes-grid');
+    if (!grid || !window.CLP_HOMES) return;
+    const waBase = 'https://wa.me/' + (window.CLP_SETTINGS.wa || '').replace(/[^0-9]/g,'');
+    const featured = window.CLP_HOMES.filter(h => h.featured !== false);
+    grid.innerHTML = featured.sort((a,b) => (a.order||10)-(b.order||10)).map(h => {
+      const img = h.photos && h.photos[0]
+        ? \`background:linear-gradient(to bottom,rgba(0,0,0,0.1),rgba(0,0,0,0.45)),url('\${h.photos[0]}') center/cover no-repeat\`
+        : 'background:linear-gradient(135deg,#3D5A40,#8B9D5C)';
+      const wa = waBase + '?text=' + encodeURIComponent(h.waMsg || 'Hi! I am interested in ' + h.name + '. Can you tell me more?');
+      return \`<div class="model-card visible">
+  <div class="model-img" style="\${img}">
+    \${h.badge ? \`<div class="model-badge">\${h.badge}</div>\` : '<div></div>'}
+    <div class="model-tag">\${h.type || ''}</div>
+  </div>
+  <div class="model-body">
+    <h3 class="model-name">\${h.name}</h3>
+    <div class="model-specs">
+      \${h.sqft ? \`<span>📐 \${h.sqft}</span>\` : ''}
+      \${h.beds ? \`<span>🛏 \${h.beds} Bed</span>\` : ''}
+      \${h.baths ? \`<span>🚿 \${h.baths}</span>\` : ''}
+    </div>
+    <div class="model-price-row">
+      <div>
+        <div class="model-price">\${h.price || ''}</div>
+        \${h.monthly ? \`<div class="model-finance">As low as <strong>\${h.monthly}</strong></div>\` : ''}
+      </div>
+      \${h.down ? \`<div class="model-down">\${h.down} Down</div>\` : ''}
+    </div>
+    <a href="\${wa}" target="_blank" class="btn btn-wa w-full">💬 Inquire on WhatsApp</a>
+  </div>
+</div>\`;
+    }).join('');
+  });
+})();`;
+
+  const el = document.getElementById('exportCode');
+  if (el) el.textContent = code;
+}
+
+function copyExport() {
+  const code = document.getElementById('exportCode').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    showToast('📋 Code copied to clipboard!', 'success');
+  }).catch(() => {
+    showToast('Select the code box and copy manually', 'error');
+  });
+}
+
+// ══════════════════════════════════════════════
+//  MODAL
+// ══════════════════════════════════════════════
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// ══════════════════════════════════════════════
+//  TOASTS
+// ══════════════════════════════════════════════
+function showToast(msg, type = '') {
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  document.getElementById('toastContainer').appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+// ══════════════════════════════════════════════
+//  DRAG & DROP
+// ══════════════════════════════════════════════
+const uploadArea = document.getElementById('uploadArea');
+if (uploadArea) {
+  uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+  uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+  uploadArea.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    const fakeInput = { files };
+    handlePhotoUpload(fakeInput);
+  });
+}
+
+// ══════════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════════
+checkSession();
+</script>
+
+</body>
+</html>
